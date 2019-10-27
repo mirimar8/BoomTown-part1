@@ -8,7 +8,7 @@ module.exports = ({ app, pgResource }) => {
   resolvers = resolvers(app);
 
   /**
-   * @TODO: Initialize Apollo Server
+   * @TODO: Initialize Apollo Server DONE
    *
    * Once you've defined your schema types, it's time to wire up your schema
    * to your resolving functions. This is Apollo magic, and it's done using
@@ -17,8 +17,11 @@ module.exports = ({ app, pgResource }) => {
    * https://www.apollographql.com/docs/apollo-server/v2/api/graphql-tools.html#makeExecutableSchema
    */
 
-  // @TODO: Refactor to use 'makeExecutableSchema' to wire up your schema to your resolvers:
-  const schema = undefined;
+  // @TODO: Refactor to use 'makeExecutableSchema' to wire up your schema to your resolvers: DONE
+  const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+  });
   // -------------------------------
 
   const apolloServer = new ApolloServer({
@@ -32,17 +35,21 @@ module.exports = ({ app, pgResource }) => {
         // TODO:
         // If there is a token, verify that token to get user info and assign it to user variable
         // return req, token, user, pgResources
+        return {
+          pgResource
+        }
       } catch (e) {
         // throw error
       }
     },
     schema,
+
   });
 
   apolloServer.applyMiddleware({
     app,
-    // @TODO: Add the CORS_CONFIG from your application configuration
-    cors: undefined,
+    // @TODO: Add the CORS_CONFIG from your application configuration DONE
+    cors: app.get('CORS_CONFIG')
     // -------------------------------
   });
 };

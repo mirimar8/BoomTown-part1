@@ -13,16 +13,19 @@ let pgResource = require('./api/pg-resource');
 pgResource = pgResource(postgres);
 
 /**
- * @TODO: Initialize Apollo Server
+ * @TODO: Initialize Apollo Server DONE
  *
  * When you've completed your schema, configured and connected to Postgres
  * you're ready to start your Apollo Server.
  *
  *  Uncomment the following lines when you're ready to start Apollo:
  *
- *  const initApollo = require('./config/apollo')
- *  initApollo({ app, pgResource })
+ * 
  */
+
+const initApollo = require('./config/apollo')
+initApollo({ app, pgResource })
+
 
 postgres.on('error', (err, client) => {
   console.error('Unexpected error on idle postgres client', err);
@@ -33,14 +36,15 @@ const server = app.listen(PORT, () => {
   console.log(`>> ${chalk.blue('Express running:')} http://localhost:${PORT}`);
 
   /**
-   *  @TODO: Initialize Apollo Server
+   *  @TODO: Initialize Apollo Server DONE
    *
    *   Uncomment the following lines when you're ready to start Apollo:
-   *
-   *   console.log(
-   *     `>> ${chalk.magenta('GraphQL playground:')} http://localhost:${PORT}/graphql`
-   *   );
    */
+
+  console.log(
+    `>> ${chalk.magenta('GraphQL playground:')} http://localhost:${PORT}/graphql`
+  );
+
 });
 
 server.on('error', err => {

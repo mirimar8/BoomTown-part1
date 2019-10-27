@@ -1,7 +1,7 @@
 const { gql } = require("apollo-server-express");
 
 /**
- *  @TODO: Boomtown Schema
+ *  @TODO: Boomtown Schema DONE EXCEPT THE SCALAR DATE (CREATED)
  *
  * Define the types in your GraphQL schema here.
  * For each type, remove the `_: Boolean` placeholder and add the
@@ -19,8 +19,8 @@ module.exports = gql`
    imageurl: String
    description: String!
    itemowner: User!
-   tags: [tags]
-   created: Date!
+   tags: [Tag]
+   created: String!
    borrower: User
   }
 
@@ -29,8 +29,8 @@ module.exports = gql`
     email: String!
     fullname: String!
     bio: String
-    items: [items]
-    borrowed: [items]
+    items: [Item]
+    borrowed: [Item]
   }
 
   type Tag {
@@ -69,6 +69,6 @@ module.exports = gql`
   }
 
   type Mutation {
-    addItem(item: NewItemInput! image: Upload) : item
+    addItem(item: NewItemInput!) : Item
   }
 `;

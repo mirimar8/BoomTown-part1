@@ -9,7 +9,7 @@ module.exports = (app) => {
 
 
   /**
-   *  @TODO: Configuration Variables
+   *  @TODO: Configuration Variables DONE
    *
    *  As much as possible, configuration information should be defined in a single location, this file.
    *
@@ -52,7 +52,7 @@ module.exports = (app) => {
   app.set('PG_HOST', process.env.PG_HOST || 'localhost');
   app.set('PG_USER', process.env.PG_USER || 'mirimarkovitz');
   app.set('PG_DB', process.env.PG_DB || 'BoomTown');
-  app.set('PG_PASSWORD', process.env.PG_PASSWORD || 'kiska0201');
+  app.set('PG_PASSWORD', process.env.PG_PASSWORD || '');
 
   app.use(cookieParser());
 

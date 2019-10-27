@@ -9,7 +9,7 @@ module.exports = postgres => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: "", // @TODO: Authentication - Server
+        text: "INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *", // @TODO: Authentication - Server DONE
         values: [fullname, email, password],
       };
       try {
@@ -28,7 +28,7 @@ module.exports = postgres => {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: "", // @TODO: Authentication - Server
+        text: "SELECT * FROM users WHERE email=$1", // @TODO: Authentication - Server DONE
         values: [email],
       };
       try {
@@ -61,7 +61,7 @@ module.exports = postgres => {
        */
 
       const findUserQuery = {
-        text: "", // @TODO: Basic queries
+        text: "SELECT * FROM users WHERE id=$1", // @TODO: Basic queries DONE
         values: [id],
       };
 
@@ -75,13 +75,13 @@ module.exports = postgres => {
        */
 
       const user = await postgres.query(findUserQuery);
-      return user;
+      return user.rows[0];
       // -------------------------------
     },
     async getItems(idToOmit) {
       const items = await postgres.query({
         /**
-         *  @TODO:
+         *  @TODO: DONE
          *
          *  idToOmit = ownerId
          *
@@ -92,7 +92,7 @@ module.exports = postgres => {
          *  to your query text using string interpolation
          */
 
-        text: ``,
+        text: "SELECT * FROM items WHERE ownerId !== $1",
         values: idToOmit ? [idToOmit] : [],
       });
       return items.rows;
@@ -103,7 +103,7 @@ module.exports = postgres => {
          *  @TODO:
          *  Get all Items for user using their id
          */
-        text: ``,
+        text: "SELECT * FROM items WHERE ownerId = $1",
         values: [id],
       });
       return items.rows;
@@ -114,7 +114,7 @@ module.exports = postgres => {
          *  @TODO:
          *  Get all Items borrowed by user using their id
          */
-        text: ``,
+        text: `SELECT * FROM items WHERE borrowerId = $1`,
         values: [id],
       });
       return items.rows;
@@ -166,6 +166,10 @@ module.exports = postgres => {
               // Generate new Item query
               // @TODO
               // -------------------------------
+              const itemQuery = {
+                text: "INSERT INTO items (title, description, ownerId) VALUES ($1, $2, $3) RETURNING *",
+                values: [title, description, user]
+              }
 
               // Insert new Item
               // @TODO

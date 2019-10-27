@@ -22,9 +22,9 @@ const relationResolvers = require("./relationResolvers");
 
 module.exports = app => {
   return {
-    // Date: DateScalar,
+    //Date: DateScalar,
     Query: queryResolvers(app),
-    Mutation: mutationResolvers(app),
-    ...relationResolvers,
+    //Mutation: mutationResolvers(app),
+    //...relationResolvers,
   };
 };
