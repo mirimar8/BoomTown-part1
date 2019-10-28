@@ -79,6 +79,7 @@ module.exports = postgres => {
       // -------------------------------
     },
     async getItems(idToOmit) {
+
       const items = await postgres.query({
         /**
          *  @TODO: DONE
@@ -94,13 +95,15 @@ module.exports = postgres => {
 
         text: "SELECT * FROM items WHERE ownerId !== $1",
         values: idToOmit ? [idToOmit] : [],
+
       });
+
       return items.rows;
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
         /**
-         *  @TODO:
+         *  @TODO: DONE
          *  Get all Items for user using their id
          */
         text: "SELECT * FROM items WHERE ownerId = $1",
@@ -111,7 +114,7 @@ module.exports = postgres => {
     async getBorrowedItemsForUser(id) {
       const items = await postgres.query({
         /**
-         *  @TODO:
+         *  @TODO: DONE
          *  Get all Items borrowed by user using their id
          */
         text: `SELECT * FROM items WHERE borrowerId = $1`,
@@ -120,12 +123,12 @@ module.exports = postgres => {
       return items.rows;
     },
     async getTags() {
-      const tags = await postgres.query(/* @TODO: Basic queries */);
+      const tags = await postgres.query({ text: `SELECT * FROM tags` }/* @TODO: Basic queries DONE */);
       return tags.rows;
     },
     async getTagsForItem(id) {
       const tagsQuery = {
-        text: ``, // @TODO: Advanced query Hint: use INNER JOIN
+        text: `SELECT * FROM tags INNER JOIN itemtags ON itemtags.tagId = tags.id WHERE itemtags.itemId = $1`, // @TODO: Advanced query Hint: use INNER JOIN
         values: [id],
       };
 
@@ -167,9 +170,9 @@ module.exports = postgres => {
               // @TODO
               // -------------------------------
               const itemQuery = {
-                text: "INSERT INTO items (title, description, ownerId) VALUES ($1, $2, $3) RETURNING *",
-                values: [title, description, user]
-              }
+                text: "INSERT INTO items (title, description, imageUrl, ownerId, borrowerId) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+                values: [title, description, imageUrl, ownerId, borrowerId]
+              };
 
               // Insert new Item
               // @TODO
