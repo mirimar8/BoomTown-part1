@@ -17,10 +17,10 @@ const queryResolvers = app => ({
      */
     return null;
   },
+
   async user(parent, { id }, { pgResource }, info) {
     try {
       // console.log(pgResource);
-
       const user = await pgResource.getUserById(id);
       // console.log(user);
       return user;
@@ -28,33 +28,23 @@ const queryResolvers = app => ({
       throw new ApolloError(e);
     }
   },
-  async items(parent, { idToOmit }, { pgResource }) {
-    // @TODO: Replace this mock return statement with the correct items from Postgres DONE
-    try {
-      // console.log(pgResource);
 
-      const items = await pgResource.getItems(idToOmit);
-      // console.log(items);
+  async items(parent, { filter }, { pgResource }) {
+    try {
+      const items = await pgResource.getItems(filter);
       return items;
     } catch (e) {
       throw new ApolloError(e);
     }
-
-    // -------------------------------
   },
-  async tags() {
-    // @TODO: Replace this mock return statement with the correct tags from Postgres DONE
-    try {
-      // console.log(pgResource);
 
+  async tags(parent, args, { pgResource }) {
+    try {
       const tags = await pgResource.getTags();
-      // console.log(tags);
       return tags;
     } catch (e) {
       throw new ApolloError(e);
     }
-
-    // -------------------------------
   },
 });
 

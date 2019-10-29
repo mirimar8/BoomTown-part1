@@ -1,5 +1,5 @@
 const { GraphQLScalarType } = require('graphql');
-import { Kind } from 'graphql/language';
+const { Kind } = require('graphql/language');
 
 /**
  *  @TODO: Custom Types
@@ -13,10 +13,6 @@ import { Kind } from 'graphql/language';
  *
  *  Once you've defined your custom DATE type, don't forget to add it to your schema.
  */
-
-// @TOOD: Refactor this into a custom DATE scalar type using new GraphQLScalarType() DONE
-// const DateScalar = undefined;
-
 
 const DateScalar = {
   Date: new GraphQLScalarType({
@@ -36,8 +32,6 @@ const DateScalar = {
     },
   }),
 };
-
-// -------------------------------
 
 module.exports = {
   DateScalar

@@ -12,18 +12,23 @@ const relationResolvers = {
      *  Items (GraphQL type) the user has lent (items) and borrowed (borrowed).
      *
      */
-    // @TODO: Uncomment these lines after you define the User type with these fields
-    // items() {
-    //   // @TODO: Replace this mock return statement with the correct items from Postgres
-    //   return []
-    //   // -------------------------------
-    // },
-    // borrowed() {
-    //   // @TODO: Replace this mock return statement with the correct items from Postgres
-    //   return []
-    //   // -------------------------------
-    // }
-    // -------------------------------
+
+    async items(parent, args, { pgResource }) {
+      try {
+        const itemsLentForUser = await pgResource.getItemsForUser(parent.id);
+        return itemsLentForUser;
+      } catch (e) {
+        throw new ApolloError(e);
+      }
+    },
+    async borrowed(parent, args, { pgResource }) {
+      try {
+        const itemsBorrowedForUser = await pgResource.getBorrowedItemsForUser(parent.id);
+        return itemsBorrowedForUser;
+      } catch (e) {
+        throw new ApolloError(e);
+      }
+    },
   },
 
   Item: {
@@ -37,31 +42,36 @@ const relationResolvers = {
      * a User (GraphQL type) and tags should return a list of Tags (GraphQL type)
      *
      */
-    // @TODO: Uncomment these lines after you define the Item type with these fields
-    // async itemowner() {
-    //   // @TODO: Replace this mock return statement with the correct user from Postgres
-    //   return {
-    //     id: 29,
-    //     fullname: "Mock user",
-    //     email: "mock@user.com",
-    //     bio: "Mock user. Remove me."
-    //   }
-    //   // -------------------------------
-    // },
-    // async tags() {
-    //   // @TODO: Replace this mock return statement with the correct tags for the queried Item from Postgres
-    //   return []
-    //   // -------------------------------
-    // },
-    // async borrower() {
-    //   /**
-    //    * @TODO: Replace this mock return statement with the correct user from Postgres
-    //    * or null in the case where the item has not been borrowed.
-    //    */
-    //   return null
-    //   // -------------------------------
-    // }
-    // -------------------------------
+    async itemowner(parent, args, { pgResource }) {
+      try {
+        const itemOwner = await pgResource.getUserById(parent.ownerId);
+        return itemOwner;
+      } catch (e) {
+        throw new ApolloError(e);
+      }
+    },
+
+    async tags(parent, args, { pgResource }) {
+      try {
+        const getTagsForItem = await pgResource.getTagsForItem(parent.id);
+        return getTagsForItem;
+      } catch (e) {
+        throw new ApolloError(e);
+      }
+    },
+
+    async borrower(parent, args, { pgResource }) {
+      try {
+        if (parent.id) {
+          const getborrower = await pgResource.getUserById(parent.id);
+          return getborrower;
+        } else {
+          return null;
+        }
+      } catch (e) {
+        throw new ApolloError(e);
+      }
+    },
   }
 };
 

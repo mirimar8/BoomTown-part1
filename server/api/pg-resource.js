@@ -9,7 +9,7 @@ module.exports = postgres => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: "INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *", // @TODO: Authentication - Server DONE
+        text: "INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *",
         values: [fullname, email, password],
       };
       try {
@@ -28,7 +28,7 @@ module.exports = postgres => {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: "SELECT * FROM users WHERE email=$1", // @TODO: Authentication - Server DONE
+        text: "SELECT * FROM users WHERE email=$1",
         values: [email],
       };
       try {
@@ -61,7 +61,7 @@ module.exports = postgres => {
        */
 
       const findUserQuery = {
-        text: "SELECT * FROM users WHERE id=$1", // @TODO: Basic queries DONE
+        text: "SELECT * FROM users WHERE id=$1",
         values: [id],
       };
 
@@ -76,65 +76,49 @@ module.exports = postgres => {
 
       const user = await postgres.query(findUserQuery);
       return user.rows[0];
-      // -------------------------------
     },
+
     async getItems(idToOmit) {
-
+      // console.log(idToOmit);
       const items = await postgres.query({
-        /**
-         *  @TODO: DONE
-         *
-         *  idToOmit = ownerId
-         *
-         *  Get all Items. If the idToOmit parameter has a value,
-         *  the query should only return Items were the ownerid !== idToOmit
-         *
-         *  Hint: You'll need to use a conditional AND/WHERE clause
-         *  to your query text using string interpolation
-         */
-
-        text: "SELECT * FROM items WHERE ownerId !== $1",
+        text: idToOmit ? 'SELECT * FROM items WHERE "ownerId" != $1' : 'SELECT * FROM items',
         values: idToOmit ? [idToOmit] : [],
-
       });
 
       return items.rows;
     },
+
     async getItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: DONE
-         *  Get all Items for user using their id
-         */
-        text: "SELECT * FROM items WHERE ownerId = $1",
+        text: 'SELECT * FROM items WHERE "ownerId" = $1',
         values: [id],
       });
       return items.rows;
     },
+
     async getBorrowedItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: DONE
-         *  Get all Items borrowed by user using their id
-         */
-        text: `SELECT * FROM items WHERE borrowerId = $1`,
+        text: `SELECT * FROM items WHERE "borrowerId" = $1`,
         values: [id],
       });
       return items.rows;
     },
+
     async getTags() {
-      const tags = await postgres.query({ text: `SELECT * FROM tags` }/* @TODO: Basic queries DONE */);
+      const tags = await postgres.query({ text: `SELECT * FROM tags` });
       return tags.rows;
     },
+
     async getTagsForItem(id) {
       const tagsQuery = {
-        text: `SELECT * FROM tags INNER JOIN itemtags ON itemtags.tagId = tags.id WHERE itemtags.itemId = $1`, // @TODO: Advanced query Hint: use INNER JOIN DONE
+        text: `SELECT * FROM tags INNER JOIN itemtags ON itemtags.tagId = tags.id WHERE itemtags.itemId = $1`,
         values: [id],
       };
-
+      console.log(tagsQuery);
       const tags = await postgres.query(tagsQuery);
       return tags.rows;
     },
+
     async saveNewItem({ item, user }) {
       /**
        *  @TODO: Adding a New Item
@@ -173,14 +157,21 @@ module.exports = postgres => {
                 text: "INSERT INTO items (title, description, imageUrl, ownerId, borrowerId) VALUES ($1, $2, $3, $4, $5) RETURNING *",
                 values: [title, description, imageUrl, ownerId, borrowerId]
               };
+              const newItem = await postgres.query(itemQuery);
 
               // Insert new Item
               // @TODO
               // -------------------------------
 
+
               // Generate tag relationships query (use the'tagsQueryString' helper function provided)
               // @TODO
               // -------------------------------
+              const tagItemQuery = {
+                text: `INSERT INTO itemtags (tagId, itemId) VALUES ${tagsQueryString(tags, itemid, result)}) `,
+                values: [tagId, itemId]
+              };
+              const newItemTag = await postgres.query(tagItemQuery);
 
               // Insert tags
               // @TODO
@@ -194,7 +185,7 @@ module.exports = postgres => {
                 // release the client back to the pool
                 done();
                 // Uncomment this resolve statement when you're ready!
-                // resolve(newItem.rows[0])
+                resolve(newItem.rows[0])
                 // -------------------------------
               });
             });
