@@ -1,7 +1,7 @@
 const { gql } = require("apollo-server-express");
-schemaDirectives: {
-  auth: AuthDirective
-}
+// schemaDirectives: {
+//   auth: AuthDirective
+// }
 
 module.exports = gql`
   scalar Date
@@ -54,6 +54,17 @@ module.exports = gql`
     tags: [AssignedTag]!
   }
 
+  input SignupInput {
+    fullname: String!
+    email: String!
+    password: String!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
     user(id: ID!): User
     viewer: User
@@ -62,6 +73,9 @@ module.exports = gql`
   }
 
   type Mutation {
+    signup(user: SignupInput!): User!
+    login(user: LoginInput!): User!
+    logout: Boolean!
     addItem(item: NewItemInput!) : Item
   }
 `;
