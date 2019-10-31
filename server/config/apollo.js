@@ -7,17 +7,6 @@ let resolvers = require("../api/resolvers");
 module.exports = ({ app, pgResource }) => {
   resolvers = resolvers(app);
 
-  /**
-   * @TODO: Initialize Apollo Server
-   *
-   * Once you've defined your schema types, it's time to wire up your schema
-   * to your resolving functions. This is Apollo magic, and it's done using
-   * the 'makeExecutableSchema' function provided by the 'graphql-tools' package.
-   *
-   * https://www.apollographql.com/docs/apollo-server/v2/api/graphql-tools.html#makeExecutableSchema
-   */
-
-
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
@@ -25,17 +14,18 @@ module.exports = ({ app, pgResource }) => {
 
   const apolloServer = new ApolloServer({
     context: ({ req }) => {
-      // @TODO: Uncomment this later when we add auth (to be added to Apollo's context)
-      // const tokenName = app.get("JWT_COOKIE_NAME")
-      // const token = req ? req.cookies[tokenName] : undefined
-      // let user = null
-      // -------------------------------
+      const tokenName = app.get("JWT_COOKIE_NAME")
+      const token = req ? req.cookies[tokenName] : undefined
+      let user = null
       try {
         // TODO:
         // If there is a token, verify that token to get user info and assign it to user variable
         // return req, token, user, pgResources
         return {
-          pgResource
+          pgResource,
+          req,
+          token,
+          user
         }
       } catch (e) {
         // throw error

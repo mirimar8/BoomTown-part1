@@ -1,4 +1,7 @@
 const { gql } = require("apollo-server-express");
+schemaDirectives: {
+  auth: AuthDirective
+}
 
 module.exports = gql`
   scalar Date

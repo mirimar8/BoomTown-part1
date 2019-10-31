@@ -40,26 +40,6 @@ module.exports = postgres => {
       }
     },
     async getUserById(id) {
-      /**
-       *  @TODO: Handling Server Errors
-       *
-       *  Inside of our resource methods we get to determine when and how errors are returned
-       *  to our resolvers using try / catch / throw semantics.
-       *
-       *  Ideally, the errors that we'll throw from our resource should be able to be used by the client
-       *  to display user feedback. This means we'll be catching errors and throwing new ones.
-       *
-       *  Errors thrown from our resource will be captured and returned from our resolvers.
-       *
-       *  This will be the basic logic for this resource method:
-       *  1) Query for the user using the given id. If no user is found throw an error.
-       *  2) If there is an error with the query (500) throw an error.
-       *  3) If the user is found and there are no errors, return only the id, email, fullname, bio fields.
-       *     -- this is important, don't return the password!
-       *
-       *  You'll need to complete the query first before attempting this exercise.
-       */
-
       const findUserQuery = {
         text: "SELECT * FROM users WHERE id=$1",
         values: [id],
@@ -117,47 +97,23 @@ module.exports = postgres => {
     },
 
     async saveNewItem({ item, user }) {
-      /**
-       *  @TODO: Adding a New Item
-       *
-       *  Adding a new Item requires 2 separate INSERT statements.
-       *
-       *  All of the INSERT statements must:
-       *  1) Proceed in a specific order.
-       *  2) Succeed for the new Item to be considered added
-       *  3) If any of the INSERT queries fail, any successful INSERT
-       *     queries should be 'rolled back' to avoid 'orphan' data in the database.
-       *
-       *  To achieve #3 we'll ue something called a Postgres Transaction!
-       *  The code for the transaction has been provided for you, along with
-       *  helpful comments to help you get started.
-       *
-       *  Read the method and the comments carefully before you begin.
-       */
-
       return new Promise((resolve, reject) => {
-        /**
-         * Begin transaction by opening a long-lived connection
-         * to a client from the client pool.
-         * - Read about transactions here: https://node-postgres.com/features/transactions
-         */
         postgres.connect((err, client, done) => {
           try {
             // Begin postgres transaction
             client.query("BEGIN", async err => {
               const { title, description, tags } = item;
 
-              const itemQuery = {
+              const newItemQuery = {
                 text: "INSERT INTO items (title, description, imageUrl, ownerId, borrowerId) VALUES ($1, $2, $3, $4, $5) RETURNING *",
                 values: [title, description, imageUrl, ownerId, borrowerId]
               };
-              const newItem = await postgres.query(itemQuery);
+              const newItem = await postgres.query(newItemQuery);
 
-              const tagItemQuery = {
+              const newItemTagQuery = await postgres.query({
                 text: `INSERT INTO itemtags (tagId, itemId) VALUES ${tagsQueryString(tags, itemid, result)}) `,
                 values: [tagId, itemId]
-              };
-              const newItemTag = await postgres.query(tagItemQuery);
+              });
 
               // Commit the entire transaction!
               client.query("COMMIT", err => {
@@ -166,7 +122,6 @@ module.exports = postgres => {
                 }
                 // release the client back to the pool
                 done();
-                // Uncomment this resolve statement when you're ready!
                 resolve(newItem.rows[0])
                 // -------------------------------
               });
