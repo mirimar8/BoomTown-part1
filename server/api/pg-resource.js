@@ -64,18 +64,13 @@ module.exports = postgres => {
         text: "SELECT * FROM users WHERE id=$1",
         values: [id],
       };
-
-      /**
-       *  Refactor the following code using the error handling logic described above.
-       *  When you're done here, ensure all of the resource methods in this file
-       *  include a try catch, and throw appropriate errors.
-       *
-       *  Ex: If the user is not found from the DB throw 'User is not found'
-       *  If the password is incorrect throw 'User or Password incorrect'
-       */
-
-      const user = await postgres.query(findUserQuery);
-      return user.rows[0];
+      try {
+        const user = await postgres.query(findUserQuery);
+        if (!user) throw "User was not found.";
+        return user.rows[0];
+      } catch (e) {
+        throw "User was not found.";
+      }
     },
 
     async getItems(idToOmit) {
@@ -111,12 +106,14 @@ module.exports = postgres => {
 
     async getTagsForItem(id) {
       const tagsQuery = {
-        text: `SELECT * FROM tags INNER JOIN itemtags ON itemtags.tagId = tags.id WHERE itemtags.itemId = $1`,
+        text: `SELECT * FROM tags INNER JOIN itemtags ON itemtags."tagId" = tags.id WHERE itemtags."itemId" = $1`,
         values: [id],
       };
-      console.log(tagsQuery);
+      // console.log('get tags for items', tagsQuery);
       const tags = await postgres.query(tagsQuery);
+      // console.log('tags query result', tags);
       return tags.rows;
+
     },
 
     async saveNewItem({ item, user }) {
@@ -150,32 +147,17 @@ module.exports = postgres => {
             client.query("BEGIN", async err => {
               const { title, description, tags } = item;
 
-              // Generate new Item query
-              // @TODO
-              // -------------------------------
               const itemQuery = {
                 text: "INSERT INTO items (title, description, imageUrl, ownerId, borrowerId) VALUES ($1, $2, $3, $4, $5) RETURNING *",
                 values: [title, description, imageUrl, ownerId, borrowerId]
               };
               const newItem = await postgres.query(itemQuery);
 
-              // Insert new Item
-              // @TODO
-              // -------------------------------
-
-
-              // Generate tag relationships query (use the'tagsQueryString' helper function provided)
-              // @TODO
-              // -------------------------------
               const tagItemQuery = {
                 text: `INSERT INTO itemtags (tagId, itemId) VALUES ${tagsQueryString(tags, itemid, result)}) `,
                 values: [tagId, itemId]
               };
               const newItemTag = await postgres.query(tagItemQuery);
-
-              // Insert tags
-              // @TODO
-              // -------------------------------
 
               // Commit the entire transaction!
               client.query("COMMIT", err => {
