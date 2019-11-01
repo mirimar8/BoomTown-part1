@@ -13,8 +13,10 @@ module.exports = postgres => {
         values: [fullname, email, password],
       };
       try {
+
         const user = await postgres.query(newUserInsert);
         return user.rows[0];
+
       } catch (e) {
         switch (true) {
           case /users_fullname_key/.test(e.message):

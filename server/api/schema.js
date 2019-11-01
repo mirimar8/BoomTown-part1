@@ -32,11 +32,8 @@ module.exports = gql`
   }
 
   type AuthPayload {
-    id: ID!
-    filename: String!
-    mimetype: String!
-    encoding: String!
-    itemid: ID!
+    token: String
+    user: User
   }
 
   input AssignedTag {
@@ -73,8 +70,8 @@ module.exports = gql`
   }
 
   type Mutation {
-    signup(user: SignupInput!): User!
-    login(user: LoginInput!): User!
+    signup(user: SignupInput!): AuthPayload!
+    login(user: LoginInput!): AuthPayload!
     logout: Boolean!
     addItem(item: NewItemInput!) : Item
   }

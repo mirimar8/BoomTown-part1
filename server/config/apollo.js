@@ -1,4 +1,5 @@
 const { ApolloServer } = require("apollo-server-express");
+const { ApolloError } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 
 const typeDefs = require("../api/schema");
@@ -18,9 +19,9 @@ module.exports = ({ app, pgResource }) => {
       const token = req ? req.cookies[tokenName] : undefined
       let user = null
       try {
-        // TODO:
-        // If there is a token, verify that token to get user info and assign it to user variable
-        // return req, token, user, pgResources
+        if (token) {
+          user = jwt.verify(token, app.get("JWT_SECRET"));
+        }
         return {
           pgResource,
           req,
@@ -28,7 +29,7 @@ module.exports = ({ app, pgResource }) => {
           user
         }
       } catch (e) {
-        // throw error
+        throw new ApolloError(e);
       }
     },
     schema

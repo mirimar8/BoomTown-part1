@@ -12,6 +12,8 @@ module.exports = (app) => {
   app.set('PG_USER', process.env.PG_USER || 'mirimarkovitz');
   app.set('PG_DB', process.env.PG_DB || 'BoomTown');
   app.set('PG_PASSWORD', process.env.PG_PASSWORD || '');
+  app.set('JWT_SECRET', process.env.JWT_SECRET || 'keyboardcat')
+  app.set('JWT_COOKIE_NAME', 'bt-token')
 
   app.use(cookieParser());
 

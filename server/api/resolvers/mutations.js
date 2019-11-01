@@ -31,13 +31,14 @@ const mutationResolvers = app => ({
     { pgResource, req },
   ) {
     try {
-      const hashedPassword = await bcrypt.hash(args.user.password, 10);
-      const user = await context.pgResource.createUser({
-        fullname: args.user.fullname,
-        email: args.user.email,
+      console.log("hi");
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = await pgResource.createUser({
+        fullname,
+        email,
         password: hashedPassword,
       });
-
+      console.log("tryng to create:", user);
       const token = generateToken(user, app.get("JWT_SECRET"));
       setCookie({
         tokenName: app.get("JWT_COOKIE_NAME"),
@@ -62,23 +63,27 @@ const mutationResolvers = app => ({
     { pgResource, req },
   ) {
     try {
-      const user = await context.pgResource.getUserAndPasswordForVerification(
-        args.user.email,
+      console.log("trying to login with:", email);
+      const user = await pgResource.getUserAndPasswordForVerification(
+        email
       );
+      console.log("got user", user);
       if (!user) throw "User was not found.";
-      const valid = await bcrypt.compare(args.user.password, user.password);
+      console.log(password, user.password);
+      const valid = await bcrypt.compare(password, user.password);
+      console.log(valid);
       if (!valid) throw "Invalid Password";
 
       const token = generateToken(user, app.get("JWT_SECRET"));
       setCookie({
         tokenName: app.get("JWT_COOKIE_NAME"),
         token,
-        res: req.res,
+        res: req.res
       });
 
       return {
         token,
-        user,
+        user
       };
     } catch (e) {
       throw new AuthenticationError(e);
