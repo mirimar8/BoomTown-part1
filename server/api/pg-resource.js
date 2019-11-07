@@ -107,15 +107,24 @@ module.exports = postgres => {
               const { title, description, tags } = item;
 
               const newItemQuery = {
-                text: "INSERT INTO items (title, description, imageUrl, ownerId, borrowerId) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-                values: [title, description, imageUrl, ownerId, borrowerId]
+                text: `INSERT INTO items (title, description, "ownerId") VALUES ($1, $2, $3) RETURNING *`,
+                values: [title, description, user.id]
               };
-              const newItem = await postgres.query(newItemQuery);
+              const newItem = await client.query(newItemQuery);
+              const newItemId = newItem.rows[0].id;
 
-              const newItemTagQuery = await postgres.query({
-                text: `INSERT INTO itemtags (tagId, itemId) VALUES ${tagsQueryString(tags, itemid, result)}) `,
-                values: [tagId, itemId]
-              });
+              console.log("newItemId", newItemId);
+
+              const newItemTagQuery = {
+                text: `INSERT INTO itemtags ("tagId", "itemId") VALUES ${tagsQueryString(tags, newItemId, "")}`,
+                values: tags.map(tag => tag.id)
+              };
+
+              // console.log(tags);
+              // console.log(tags.map(tag => tag.id))
+              // console.log(newItemTagQuery);
+
+              await client.query(newItemTagQuery);
 
               // Commit the entire transaction!
               client.query("COMMIT", err => {

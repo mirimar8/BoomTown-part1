@@ -1,13 +1,9 @@
 const { ApolloError } = require("apollo-server");
 
 const queryResolvers = app => ({
-  viewer(parent, args, context, info) {
 
-    if (context.token) {
-      return context.token
-    } else {
-      return null;
-    }
+  viewer(parent, args, { user }, info) {
+    return user;
   },
 
   async user(parent, { id }, { pgResource }, info) {
@@ -36,6 +32,7 @@ const queryResolvers = app => ({
       throw new ApolloError(e);
     }
   },
+
 });
 
 module.exports = queryResolvers;

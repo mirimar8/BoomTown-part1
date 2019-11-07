@@ -9,7 +9,6 @@ Create a back-end application to support a local sharing economy.
 * Node.js/Express as its web server.
 * GraphQL for its client-facing API.
 * Apollo Server to connect GraphQL schema to the server in Node.js
-<!-- * Express Library (web application framework for Node.js, designed for building web applications and API's) -->
 
 ## Server
 
