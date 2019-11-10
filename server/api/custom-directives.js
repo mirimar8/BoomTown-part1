@@ -22,7 +22,6 @@ class AuthDirective extends SchemaDirectiveVisitor {
       const { resolve = defaultFieldResolver } = field;
 
       field.resolve = async function (parent, args, context, info) {
-        // console.log('hi', context.req.body);
 
         if (!context.token && context.req.body.operationName !== "signup" && context.req.body.operationName !== "login") {
           throw new ForbiddenError("Forbidden: No Access!");

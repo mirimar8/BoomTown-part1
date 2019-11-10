@@ -56,7 +56,6 @@ module.exports = postgres => {
     },
 
     async getItems(idToOmit) {
-      // console.log(idToOmit);
       const items = await postgres.query({
         text: idToOmit ? 'SELECT * FROM items WHERE "ownerId" != $1' : 'SELECT * FROM items',
         values: idToOmit ? [idToOmit] : [],
@@ -91,11 +90,8 @@ module.exports = postgres => {
         text: `SELECT * FROM tags INNER JOIN itemtags ON itemtags."tagId" = tags.id WHERE itemtags."itemId" = $1`,
         values: [id],
       };
-      // console.log('get tags for items', tagsQuery);
       const tags = await postgres.query(tagsQuery);
-      // console.log('tags query result', tags);
       return tags.rows;
-
     },
 
     async saveNewItem({ item, user }) {
@@ -120,10 +116,6 @@ module.exports = postgres => {
                 values: tags.map(tag => tag.id)
               };
 
-              // console.log(tags);
-              // console.log(tags.map(tag => tag.id))
-              // console.log(newItemTagQuery);
-
               await client.query(newItemTagQuery);
 
               // Commit the entire transaction!
@@ -134,7 +126,6 @@ module.exports = postgres => {
                 // release the client back to the pool
                 done();
                 resolve(newItem.rows[0])
-                // -------------------------------
               });
             });
           } catch (e) {

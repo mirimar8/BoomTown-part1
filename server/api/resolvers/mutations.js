@@ -1,8 +1,7 @@
 const { ApolloError } = require("apollo-server-express");
 const { AuthenticationError } = require("apollo-server-express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken")
-
+const jwt = require("jsonwebtoken");
 
 function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
@@ -12,15 +11,10 @@ function setCookie({ tokenName, token, res }) {
   });
 }
 
-
 function generateToken(user, secret) {
   const { id, email, fullname, bio } = user;
   return jwt.sign({ id, email, fullname, bio }, secret, { expiresIn: '2h' });
 }
-
-// @TODO: Uncomment these lines later when we add auth
-// const authMutations = require("./auth")
-// -------------------------------
 
 const mutationResolvers = app => ({
   async signup(
@@ -31,14 +25,12 @@ const mutationResolvers = app => ({
     { pgResource, req },
   ) {
     try {
-      console.log("hi");
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await pgResource.createUser({
         fullname,
         email,
         password: hashedPassword,
       });
-      console.log("tryng to create:", user);
       const token = generateToken(user, app.get("JWT_SECRET"));
       setCookie({
         tokenName: app.get("JWT_COOKIE_NAME"),
@@ -63,15 +55,11 @@ const mutationResolvers = app => ({
     { pgResource, req },
   ) {
     try {
-      console.log("trying to login with:", email);
       const user = await pgResource.getUserAndPasswordForVerification(
         email
       );
-      console.log("got user", user);
       if (!user) throw "User was not found.";
-      console.log(password, user.password);
       const valid = await bcrypt.compare(password, user.password);
-      console.log(valid);
       if (!valid) throw "Invalid Password";
 
       const token = generateToken(user, app.get("JWT_SECRET"));
