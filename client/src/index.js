@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // @TODO: Uncomment each module as needed in your client app
-// import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from 'react-apollo'
 // import { BrowserRouter } from 'react-router-dom'
 // import { Provider as ReduxProvider } from 'react-redux'
 // -------------------------------
@@ -15,13 +15,14 @@ import theme from './theme';
  * @TODO: Initialize Apollo Client
  *
  * Uncomment the following line when Apollo Client is configured:
- *
- * import client from './apollo'
- *
- * Below in your <App />, wrap your pages in an <ApolloProvider /> component
- * and pass it `client` as the `client` prop value so they will
- * have access to data exposed by your GraphQL API.
  */
+
+import client from './apollo';
+
+/* Below in your <App />, wrap your pages in an <ApolloProvider /> component
+* and pass it `client` as the `client` prop value so they will
+* have access to data exposed by your GraphQL API.
+*/
 
 /**
  * @TODO: Add Routing
@@ -65,8 +66,10 @@ import './index.css';
 const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Home />
+      <ApolloProvider client={client}>
+        <CssBaseline />
+        <Home />
+      </ApolloProvider>
     </MuiThemeProvider>
   );
 };
