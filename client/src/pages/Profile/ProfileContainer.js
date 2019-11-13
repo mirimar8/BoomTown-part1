@@ -5,8 +5,11 @@ import Profile from './Profile';
 // import {  } from '../../apollo/queries';
 
 class ProfileContainer extends Component {
+
   render() {
-    return <Profile />;
+    // console.log(this.props);
+    // console.log(this.props.match.params.userid);
+    return <Profile Id={this.props.match.params.userid} />;
   }
 }
 

@@ -2,13 +2,14 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 
-const Profile = ({ classes }) => {
+const Profile = (props) => {
+  console.log(props);
   return (
-    <div>
+    < div >
       <p>
-        This is the profile page located at <code>/profile/:userId</code>.
+        This is the profile page located at <code>/profile/{props.Id}</code>
       </p>
-    </div>
+    </div >
   );
 };
 
