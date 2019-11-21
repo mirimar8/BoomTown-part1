@@ -140,7 +140,6 @@ class AccountForm extends Component {
                   color="secondary"
                   disabled={
                     pristine || invalid
-                    // @TODO: This prop should depend on pristine or valid state of form
                   }
                 >
                   {this.state.formToggle ? 'Enter' : 'Create Account'}
@@ -150,7 +149,6 @@ class AccountForm extends Component {
                     className={classes.formToggle}
                     type="button"
                     onClick={() => {
-                      // @TODO: Reset the form on submit
                       form.reset();
                       this.setState({
                         formToggle: !this.state.formToggle
@@ -177,8 +175,6 @@ class AccountForm extends Component {
   }
 }
 
-// @TODO: Use compose to add the login and signup mutations to this components props.
-// @TODO: Refetch the VIEWER_QUERY to reload the app and access authenticated routes.
 export default compose(
   graphql(SIGNUP_MUTATION, {
     options: {

@@ -25,14 +25,14 @@ const Home = ({ classes }) => {
         <Typography variant="h1" className={classes.headline}>
           Share. Borrow. Prosper.
         </Typography>
-      </Grid>
+      </Grid >
       <Grid item xs={12} sm={12} md={6}>
         <Typography gutterBottom variant="h3">
           Welcome home.
         </Typography>
         <AccountForm />
       </Grid>
-    </Grid>
+    </Grid >
   );
 };
 

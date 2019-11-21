@@ -14,7 +14,7 @@ export class ShareItemPreview extends Component {
                     <h1>{state.title}</h1>
                     <h2>{state.description}</h2>
                 </div>
-                )}
+                )};
 
             </ItemPreviewContext.Consumer>
         )

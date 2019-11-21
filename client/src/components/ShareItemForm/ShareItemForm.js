@@ -9,7 +9,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
+
 
 
 
@@ -42,7 +43,7 @@ class ShareForm extends Component {
                 onSubmit={handleSubmit}
                 className={classes.shareForm}
               >
-                {/* <h2> Share. Borrow. Prosper </h2> */}
+                <h1 className={classes.heading}> Share. Borrow. Prosper. </h1>
 
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
@@ -52,6 +53,7 @@ class ShareForm extends Component {
                         <Button
                           variant="contained"
                           margin="normal"
+                          color="primary"
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -74,7 +76,7 @@ class ShareForm extends Component {
                         <TextField
                           type="text"
                           margin="normal"
-                          label={state.item.title} // and use formSpy
+                          label={state.item.title} //  use formSpy
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -95,7 +97,7 @@ class ShareForm extends Component {
                         <TextField
                           type="text"
                           margin="normal"
-                          label={state.item.description} // and use formSpy
+                          label={state.item.description} // use formSpy
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -136,7 +138,12 @@ class ShareForm extends Component {
                   />
                 </FormControl>
 
-                <Button type="submit" variant="outlined">SHARE</Button>
+                <Button className={classes.shareButton}
+                  type="submit"
+                  variant="outlined"
+
+                >SHARE
+                </Button>
 
               </form>
             )}

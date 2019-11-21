@@ -1,10 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import styles from './styles';
 import ShareItemForm from '../../components/ShareItemForm';
-// import ShareItemPreview from '../../components/ShareItemPreview';
+// import ShareItemPreview from '../../components/ShareItemPreview/ShareItemPreview';
 /* 
   TODO: Create ShareItemFrom and ShareItemPreview in the components dir
   and call them from this file.
@@ -20,37 +18,14 @@ import ShareItemForm from '../../components/ShareItemForm';
 
 const Share = ({ classes }) => {
   return (
-    <Grid
-      container
-      className={classes.root}
-      direction="row"
-      alignItems="center"
-      justify="center"
-    >
-      <Grid item xs={12} sm={12} md={6}>
-        <Typography
-          variant="button"
-          gutterBottom
-          className={classes.subheading}
-        >
-        </Typography>
-        <Typography variant="h1" className={classes.headline}>
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sm={12} md={6}>
-        <Typography gutterBottom variant="h3">
-          Share. Borrow. <br></br>Prosper.
+    <div className={classes.share}>
 
-        </Typography>
-        <ShareItemForm />
-      </Grid>
-    </Grid >
+      {/* <ShareItemPreview /> */}
+      <ShareItemForm />
+      <ShareItemForm />
+    </div >
   );
 };
 
-// const ShareItemPreview = ({ classes }) => {
-//   return (
-//     <ShareItemPreview />
-//   );
-// };
+
 export default withStyles(styles)(Share);
