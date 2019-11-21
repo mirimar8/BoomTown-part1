@@ -3,10 +3,23 @@ import { Form, Field } from "react-final-form";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { ItemPreviewContext } from '../../context/ItemPreviewProvider'
+import { withStyles } from '@material-ui/core/styles';
+import styles from './styles';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
 
 
-const onValidateFunc = values => { console.log(values) };
-const onFormSubmitFunc = values => { console.log(values) };
+
+
+const onValidate = values => { console.log(values) };
+const onFormSubmit = values => { console.log(values) };
+// const handleChange = event => {
+//   setPersonName(event.target.value);
+// };
+
 
 class ShareForm extends Component {
   constructor(props) {
@@ -17,36 +30,114 @@ class ShareForm extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
           <Form
-            onSubmit={onFormSubmitFunc}
-            validate={onValidateFunc}
+            onSubmit={onFormSubmit}
+            validate={onValidate}
             render={({ handleSubmit, form }) => (
-              <form onSubmit={handleSubmit}>
-                <h2> Share. Borrow. Prosper </h2>
-                <div>
+              <form
+                onSubmit={handleSubmit}
+                className={classes.shareForm}
+              >
+                {/* <h2> Share. Borrow. Prosper </h2> */}
 
+                <FormControl fullWidth className={classes.formControl}>
+                  <Field
+                    name="imageurl"
+                    render={({ input, meta }) => (
+                      <div>
+                        <Button
+                          variant="contained"
+                          margin="normal"
+                          fullWidth
+                          inputProps={{
+                            autoComplete: 'off',
+                            ...input
+                          }}
+                          value={input.value}
+                        >
+                          SELECT AN IMAGE
+                          </Button>
+                      </div>
+                    )}
+                  />
+                </FormControl>
+
+                <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="itemname"
                     render={({ input, meta }) => (
                       <div>
-                        <label>{state.item.title}</label>
                         <TextField
                           type="text"
-                          placeholder="Name your item" // will change to {state.title} and use formSpy
+                          margin="normal"
+                          label={state.item.title} // and use formSpy
+                          fullWidth
+                          inputProps={{
+                            autoComplete: 'off',
+                            ...input
+                          }}
                           value={input.value}
-                          {...input}
                         />
                       </div>
                     )}
                   />
+                </FormControl>
 
-                  <Button type="submit" variant="outlined">SHARE</Button>
+                <FormControl fullWidth className={classes.formControl}>
+                  <Field
+                    name="description"
+                    render={({ input, meta }) => (
+                      <div>
+                        <TextField
+                          type="text"
+                          margin="normal"
+                          label={state.item.description} // and use formSpy
+                          fullWidth
+                          inputProps={{
+                            autoComplete: 'off',
+                            ...input
+                          }}
+                          value={input.value}
+                        />
+                      </div>
+                    )}
+                  />
+                </FormControl>
 
+                <FormControl fullWidth className={classes.formControl}>
+                  <Field
+                    name="tags"
+                    render={({ input, meta }) => (
+                      <div>
+                        <InputLabel>Add some tags</InputLabel>
+                        <Select
+                          fullWidth
+                          multiple
+                          value={input.value}
+                          // onChange={handleChange}
+                          input={<Input />}
+                          renderValue={selected => selected.join(', ')}
+                        // MenuProps={MenuProps}
 
-                </div>
+                        >
+                          {/* {names.map(name => (
+                            <MenuItem key={name} value={name}>
+                              <Checkbox checked={personName.indexOf(name) > -1} />
+                              <ListItemText primary={name} />
+                            </MenuItem>
+                          ))} */}
+                        </Select>
+                      </div>
+                    )}
+                  />
+                </FormControl>
+
+                <Button type="submit" variant="outlined">SHARE</Button>
+
               </form>
             )}
 
@@ -58,4 +149,4 @@ class ShareForm extends Component {
   }
 }
 
-export default ShareForm;
+export default withStyles(styles)(ShareForm);

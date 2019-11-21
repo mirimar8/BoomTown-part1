@@ -6,8 +6,7 @@ import gql from "graphql-tag";
 
 const ItemFields = gql`
   fragment ItemFields on Item {
-    # @TODO: Create a fragment to query the following fields for an item:
-  
+    
         id
         title
         imageurl
@@ -36,8 +35,6 @@ export const ITEM_QUERY = gql`
     item (id: $id) {
       ...ItemFields
     }
-   
-    # @TODO: Query an item by its id and return the ItemFields fragment.
   }
   ${ItemFields}
 `;
@@ -47,8 +44,6 @@ export const ALL_ITEMS_QUERY = gql`
     items(filter: $filter) {
       ...ItemFields
     }
-
-    # @TODO: Query items (optionally by tag id) and return the ItemFields fragment.
   }
   ${ItemFields}
 `;
@@ -66,8 +61,6 @@ export const ALL_USER_ITEMS_QUERY = gql`
         ...itemFields
       }
     }
-    # @TODO: Query the bio, email, fullname, items, and borrowed for the user by id
-    # Use the ItemFields fragment for the items and borrowed fields.
   }
   ${ItemFields}
 `;
@@ -78,7 +71,6 @@ export const ALL_TAGS_QUERY = gql`
       id
       title
     }
-    # @TODO: Query the id and title fields for tags.
   }
 `;
 
@@ -87,9 +79,6 @@ export const ADD_ITEM_MUTATION = gql`
     addItem(item: $item) {
       id
     }
-    
-    # @TODO: Pass the item and image into the addItem mutation as arguments
-    # and return the new item id when the mutation is complete.
   }
 `;
 
@@ -105,14 +94,11 @@ export const VIEWER_QUERY = gql`
       fullname
       bio
     }
-    # @TODO: Query the id, email, fullname, and bio fields for the viewer.
   }
 `;
 export const LOGOUT_MUTATION = gql`
   mutation {
     logout
-
-    # @TODO: Run the logout mutation.
   }
 `;
 
@@ -124,8 +110,6 @@ export const SIGNUP_MUTATION = gql`
         id
       }
     }
-    # @TODO: Pass the user into the signup mutation as an argument
-    # and return the token and user id.
   }
 `;
 
@@ -137,7 +121,5 @@ export const LOGIN_MUTATION = gql`
         id
       }
     }
-    # @TODO: Pass the user into the login mutation as an argument
-    # and return the token and user id.
   }
 `;

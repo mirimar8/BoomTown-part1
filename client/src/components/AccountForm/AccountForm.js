@@ -9,12 +9,12 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Form, Field } from 'react-final-form';
 import styles from './styles';
-// import {
-//   LOGIN_MUTATION,
-//   SIGNUP_MUTATION,
-//   VIEWER_QUERY
-// } from '../../apollo/queries';
-// import { graphql, compose } from 'react-apollo';
+import {
+  LOGIN_MUTATION,
+  SIGNUP_MUTATION,
+  VIEWER_QUERY
+} from '../../apollo/queries';
+import { graphql, compose } from 'react-apollo';
 
 /**
  * @TODO: Uncomment the following lines when authentication is added to the form
@@ -24,8 +24,14 @@ import styles from './styles';
 
 
 
-const onValidateFunc = values => { console.log(values) };
-const onFormSubmitFunc = values => { console.log(values) };
+const onValidate = values => {
+  console.log(values)
+
+};
+const onFormSubmit = values => {
+  console.log(values)
+
+};
 
 class AccountForm extends Component {
   constructor(props) {
@@ -40,9 +46,9 @@ class AccountForm extends Component {
 
     return (
       <Form
-        onSubmit={onFormSubmitFunc}
-        validate={onValidateFunc}
-        render={({ handleSubmit }) => (
+        onSubmit={onFormSubmit}
+        validate={onValidate}
+        render={({ handleSubmit, form, invalid, pristine, values }) => (
           <form
             onSubmit={handleSubmit}
             className={classes.accountForm}
@@ -133,7 +139,8 @@ class AccountForm extends Component {
                   size="large"
                   color="secondary"
                   disabled={
-                    false // @TODO: This prop should depend on pristine or valid state of form
+                    pristine || invalid
+                    // @TODO: This prop should depend on pristine or valid state of form
                   }
                 >
                   {this.state.formToggle ? 'Enter' : 'Create Account'}
@@ -144,6 +151,7 @@ class AccountForm extends Component {
                     type="button"
                     onClick={() => {
                       // @TODO: Reset the form on submit
+                      form.reset();
                       this.setState({
                         formToggle: !this.state.formToggle
                       });
@@ -171,4 +179,22 @@ class AccountForm extends Component {
 
 // @TODO: Use compose to add the login and signup mutations to this components props.
 // @TODO: Refetch the VIEWER_QUERY to reload the app and access authenticated routes.
-export default withStyles(styles)(AccountForm);
+export default compose(
+  graphql(SIGNUP_MUTATION, {
+    options: {
+      query: {
+        VIEWER_QUERY,
+      },
+      name: 'signup',
+    }
+  }),
+  graphql(LOGIN_MUTATION, {
+    options: {
+      query: {
+        VIEWER_QUERY,
+      },
+      name: 'login',
+    }
+  }),
+  withStyles(styles),
+)(AccountForm);
