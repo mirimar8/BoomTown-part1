@@ -6,7 +6,7 @@ const initialState = {
     title: 'Name your item',
     description: 'Describe your item',
     tags: [],
-    imgUrl: 'http://via.placeholder.com/300',
+    imageurl: 'http://via.placeholder.com/300',
     itemowner: {},
     created: new Date()
 }
@@ -25,7 +25,6 @@ class ItemPreviewProvider extends Component {
         this.setState({
             item: updatedItem
         })
-
     }
 
     resetPreview = () => {

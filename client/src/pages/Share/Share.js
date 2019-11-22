@@ -2,7 +2,8 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import ShareItemForm from '../../components/ShareItemForm';
-// import ShareItemPreview from '../../components/ShareItemPreview/ShareItemPreview';
+import ShareItemPreview from '../../components/ShareItemPreview';
+
 /* 
   TODO: Create ShareItemFrom and ShareItemPreview in the components dir
   and call them from this file.
@@ -19,10 +20,9 @@ import ShareItemForm from '../../components/ShareItemForm';
 const Share = ({ classes }) => {
   return (
     <div className={classes.share}>
+      <ShareItemPreview />
+      <ShareItemForm />
 
-      {/* <ShareItemPreview /> */}
-      <ShareItemForm />
-      <ShareItemForm />
     </div >
   );
 };
