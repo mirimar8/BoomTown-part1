@@ -12,14 +12,9 @@ import Select from '@material-ui/core/Select';
 // import Checkbox from '@material-ui/core/Checkbox';
 
 
-
-
-
 const onValidate = values => { console.log(values) };
 const onFormSubmit = values => { console.log(values) };
-// const handleChange = event => {
-//   setPersonName(event.target.value);
-// };
+
 
 
 class ShareForm extends Component {

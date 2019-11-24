@@ -4,29 +4,37 @@ import Items from '../pages/Items';
 import Home from '../pages/Home';
 import Share from '../pages/Share';
 import Profile from '../pages/Profile';
+import { ViewerContext } from '../context/ViewerProvider';
 
 
 export default () => (
-  <Fragment>
-    <menu />
-    <Switch>
-      <Route path="/items" component={Items} />
-      <Route exact path="/" component={Home} />
-      <Route path="/share" component={Share} />
-      <Route exact path="/profile" component={Profile} />
-      <Route path="/profile/:userid" component={Profile} />
-      <Redirect from="*" to="/items" />
+  <ViewerContext.Consumer>
+    {({ viewer, loading }) => {
+      if (loading) return null;
+      if (viewer) {
+        return (
+          <Fragment>
+            <menu />
+            <Switch>
+              <Route path="/share" component={Share} />
+              <Route path="/items" component={Items} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/profile/:userid" component={Profile} />
+              <Redirect from="*" to="/items" />
+            </Switch>
+          </Fragment>
+        )
 
-
-      { /**
-       * @TODO: Define routes here for: /items, /profile, /profile/:userid, and /share
-       *
-       * Provide a wildcard redirect to /items for any undefined route using <Redirect />.
-       *
-       * Later, we'll add logic to send users to one set of routes if they're logged in,
-       * or only view the /welcome page if they are not.
-       */
+      } else {
+        return (
+          <Switch>
+            <Route path="/welcome" component={Home} />
+            <Redirect from="*" to="/welcome" />
+          </Switch>
+        )
       }
-    </Switch>
-  </Fragment>
+    }}
+
+  </ViewerContext.Consumer>
+
 );

@@ -5,7 +5,7 @@ const styles = theme => ({
         width: 500,
     },
     media: {
-        height: 500,
+        height: 230,
     },
     avatar: {
         backgroundColor: red[500],

@@ -25,11 +25,7 @@ import { graphql, compose } from 'react-apollo';
 
 
 const onValidate = values => {
-  console.log(values)
-
-};
-const onFormSubmit = values => {
-  console.log(values)
+  // console.log(values)
 
 };
 
@@ -37,16 +33,23 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true
+      formToggle: true //when its true its logging in when false its logged out
     };
   }
 
   render() {
-    const { classes } = this.props;
-
+    const { classes, login, signup } = this.props;
     return (
       <Form
-        onSubmit={onFormSubmit}
+        onSubmit={(values) => {
+
+          const mutationInput = {
+            variables: {
+              user: values
+            }
+          }
+          this.state.formToggle ? login(mutationInput) : signup(mutationInput)
+        }}
         validate={onValidate}
         render={({ handleSubmit, form, invalid, pristine, values }) => (
           <form
@@ -168,7 +171,7 @@ class AccountForm extends Component {
             </Typography>
           </form>
         )}
-      ></Form>
+      ></Form >
 
     );
 
@@ -181,16 +184,16 @@ export default compose(
       query: {
         VIEWER_QUERY,
       },
-      name: 'signup',
-    }
+    },
+    name: 'signup'
   }),
   graphql(LOGIN_MUTATION, {
     options: {
       query: {
         VIEWER_QUERY,
-      },
-      name: 'login',
-    }
+      }
+    },
+    name: 'login',
   }),
   withStyles(styles),
 )(AccountForm);

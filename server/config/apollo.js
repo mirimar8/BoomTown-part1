@@ -21,7 +21,6 @@ module.exports = ({ app, pgResource }) => {
   const apolloServer = new ApolloServer({
     context: ({ req }) => {
       const tokenName = app.get("JWT_COOKIE_NAME")
-      console.log(req.cookies[tokenName]);
       const token = req ? req.cookies[tokenName] : undefined
       let user = null
       try {
