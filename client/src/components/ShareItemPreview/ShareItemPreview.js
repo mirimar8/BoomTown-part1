@@ -12,9 +12,6 @@ class ShareItemPreview extends Component {
                 {({ state }) =>
                     <div>
                         <ItemCard state={state} />
-                        {/* <img src={state.item.imageUrl} />
-                        <h1>{state.item.title}</h1>
-                        <h2>{state.item.description}</h2> */}
                     </div>
                 }
             </ItemPreviewContext.Consumer>

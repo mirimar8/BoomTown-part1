@@ -50,10 +50,6 @@ class ShareForm extends Component {
                           margin="normal"
                           color="primary"
                           fullWidth
-                          inputProps={{
-                            autoComplete: 'off',
-                            ...input
-                          }}
                           value={input.value}
                         >
                           SELECT AN IMAGE

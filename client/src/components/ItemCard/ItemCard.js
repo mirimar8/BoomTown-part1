@@ -12,10 +12,6 @@ import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
-
-
-
-
 const ItemCard = ({ classes, state }) => {
     console.log(state.item);
     return (
@@ -23,40 +19,39 @@ const ItemCard = ({ classes, state }) => {
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image={state.item.imageUrl}
+                    image={state.item.imageurl}
                 >
                 </CardMedia>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        <Avatar aria-label="user" className={classes.avatar}>
                             R
                         </Avatar>
                     }
-                    title='hi'
-                    subheader='hihi'
+                    // title="{state.item.itemowner}"
+                    subheader="date"
+                // {state.item.created}
                 />
             </CardActionArea>
-            <CardContent>
+            <CardContent className={classes.content}>
                 <Typography
                     gutterBottom
                     variant="h5"
                     component="h2"
-                    title='{state.item.title}'
                 >
-                    Lizard
-                    </Typography>
+                    {state.item.title}
+                </Typography>
                 <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
-                    description={state.item.description}
                 >
-                    djckjsdckjsckjsdckjsdkjcndnskcd
+                    {state.item.description}
                 </Typography>
 
             </CardContent>
-            <CardActions>
-                <Button size="small" color="primary">
+            <CardActions className={classes.borrowBotton}>
+                <Button variant="outlined">
                     BORROW
                 </Button>
             </CardActions>
