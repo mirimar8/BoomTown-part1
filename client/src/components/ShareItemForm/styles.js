@@ -33,8 +33,9 @@ const styles = theme => ({
         color: 'firebrick'
     },
     heading: {
-        paddingBottom: theme.spacing(7),
+        paddingBottom: theme.spacing(5),
         paddingLeft: theme.spacing(0),
+        marginTop: 0
     }
 });
 

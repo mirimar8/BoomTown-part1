@@ -2,16 +2,17 @@ import { red } from '@material-ui/core/colors';
 
 const styles = theme => ({
     card: {
-        width: 500,
+        width: 400,
     },
     media: {
-        height: 250,
+        height: 220,
     },
     avatar: {
         backgroundColor: red[500],
     },
     content: {
-        height: 200
+        height: 170,
+        paddingTop: '80px'
     },
     borrowBotton: {
         width: '30%',

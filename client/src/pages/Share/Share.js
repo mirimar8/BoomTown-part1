@@ -6,7 +6,8 @@ import ShareItemPreview from '../../components/ShareItemPreview';
 
 const Share = ({ classes }) => {
   return (
-    <div className={classes.share}>
+    <div className={classes.sharePage}>
+
       <ShareItemPreview />
       <ShareItemForm />
 

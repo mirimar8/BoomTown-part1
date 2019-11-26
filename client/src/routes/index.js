@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
+import NavBar from '../components/NavBar';
 import Items from '../pages/Items';
 import Home from '../pages/Home';
 import Share from '../pages/Share';
@@ -14,7 +15,7 @@ export default () => (
       if (viewer) {
         return (
           <Fragment>
-            <menu />
+            <NavBar />
             <Switch>
               <Route path="/share" component={Share} />
               <Route path="/items" component={Items} />
