@@ -9,18 +9,13 @@ import Menu from '@material-ui/core/Menu';
 import logo from '../../images/boomtown.svg';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
-import Icon from '@material-ui/core/Icon';
-import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-
-
 
 const NavBar = ({ classes }) => {
     const [auth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-
 
     const handleMenu = event => {
         setAnchorEl(event.currentTarget);
@@ -38,7 +33,6 @@ const NavBar = ({ classes }) => {
                     <Link to={'/items'}>
                         < IconButton edge="start" className={classes.logoIcon} color="inherit" aria-label="menu">
                             <img className={classes.logo} src={logo} />
-
                         </IconButton>
                     </Link>
                     <div className={classes.subContainer}>
@@ -88,10 +82,6 @@ const NavBar = ({ classes }) => {
             </AppBar>
         </div >
     );
-
-
 }
-
-
 
 export default withStyles(styles)(NavBar);

@@ -1,6 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
-// import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -13,7 +12,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
 const ItemCard = ({ classes, state }) => {
-    console.log(state.item);
+    // console.log(state.item);
     return (
         < Card className={classes.card}>
             <CardActionArea>
@@ -55,9 +54,7 @@ const ItemCard = ({ classes, state }) => {
                     BORROW
                 </Button>
             </CardActions>
-
         </Card >
-
     );
 }
 

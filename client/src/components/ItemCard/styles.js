@@ -20,7 +20,6 @@ const styles = theme => ({
         marginTop: '20px',
         marginLeft: '10px',
         marginBottom: '10px'
-
     }
 });
 export default styles;

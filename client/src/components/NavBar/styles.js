@@ -1,16 +1,11 @@
-
 const styles = theme => ({
     root: {
         flexGrow: 1,
-
     },
     navContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between'
-
-
-
     },
     subContainer: {
         display: 'flex',
@@ -24,7 +19,6 @@ const styles = theme => ({
         borderRadius: '25px',
         height: '50px'
     }
-
 });
 export default styles;
 

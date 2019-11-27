@@ -15,5 +15,4 @@ const Share = ({ classes }) => {
   );
 };
 
-
 export default withStyles(styles)(Share);

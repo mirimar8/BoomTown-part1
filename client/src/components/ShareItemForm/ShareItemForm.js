@@ -15,8 +15,6 @@ import Select from '@material-ui/core/Select';
 const onValidate = values => { console.log(values) };
 const onFormSubmit = values => { console.log(values) };
 
-
-
 class ShareForm extends Component {
   constructor(props) {
     super(props);

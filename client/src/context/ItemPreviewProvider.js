@@ -17,7 +17,6 @@ class ItemPreviewProvider extends Component {
         this.state = {
             item: initialState
         }
-
     }
 
     updatePreview = item => {
