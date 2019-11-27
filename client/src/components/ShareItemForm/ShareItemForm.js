@@ -10,9 +10,11 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 // import Checkbox from '@material-ui/core/Checkbox';
+import { FormSpy } from 'react-final-form'
 
 
-const onValidate = values => { console.log(values) };
+
+// const onValidate = values => { console.log(values) };
 const onFormSubmit = values => { console.log(values) };
 
 class ShareForm extends Component {
@@ -30,7 +32,7 @@ class ShareForm extends Component {
         {({ state, updatePreview, resetPreview }) => (
           <Form
             onSubmit={onFormSubmit}
-            validate={onValidate}
+            // validate={onValidate}
             render={({ handleSubmit, form }) => (
               <form
                 onSubmit={handleSubmit}

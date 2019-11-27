@@ -11,6 +11,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
+import { LOGOUT_MUTATION } from '../../apollo/queries';
+import { Mutation } from 'react-apollo';
+import client from '../../apollo';
+
 
 const NavBar = ({ classes }) => {
     const [auth] = React.useState(true);
@@ -23,7 +27,9 @@ const NavBar = ({ classes }) => {
 
     const handleClose = () => {
         setAnchorEl(null);
+
     };
+
 
     return (
         <div className={classes.root}>
@@ -73,7 +79,20 @@ const NavBar = ({ classes }) => {
                                     <Link to={'/profile'}>
                                         <MenuItem onClick={handleClose}>Your Profile</MenuItem>
                                     </Link>
-                                    <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+
+
+
+                                    <Mutation
+                                        mutation={LOGOUT_MUTATION}
+                                        onCompleted={() => client.resetStore()}>
+                                        {(logoutMutation) =>
+                                            <MenuItem onClick={logoutMutation}>
+                                                Sign Out
+                                            </MenuItem>
+                                        }
+
+                                    </Mutation>
+
                                 </Menu>
                             </div>
                         )}

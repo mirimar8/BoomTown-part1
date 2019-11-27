@@ -22,7 +22,11 @@ import { graphql, compose } from 'react-apollo';
 * import validate from './helpers/validation'
 */
 
-
+const refetchQueries = [
+  {
+    query: VIEWER_QUERY,
+  },
+];
 
 const onValidate = values => {
   // console.log(values)
@@ -181,17 +185,13 @@ class AccountForm extends Component {
 export default compose(
   graphql(SIGNUP_MUTATION, {
     options: {
-      query: {
-        VIEWER_QUERY,
-      },
+      refetchQueries,
     },
     name: 'signup'
   }),
   graphql(LOGIN_MUTATION, {
     options: {
-      query: {
-        VIEWER_QUERY,
-      }
+      refetchQueries,
     },
     name: 'login',
   }),

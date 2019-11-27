@@ -12,7 +12,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
 const ItemCard = ({ classes, state }) => {
-    // console.log(state.item);
+    console.log(state.item.title);
     return (
         < Card className={classes.card}>
             <CardActionArea>
