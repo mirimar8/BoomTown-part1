@@ -6,7 +6,7 @@ const initialState = {
     title: 'Name your item',
     description: 'Describe your item',
     tags: [],
-    imageurl: 'http://via.placeholder.com/300',
+    imageurl: 'http://via.placeholder.com/300?text=Please select an image',
     itemowner: {},
     created: new Date()
 }

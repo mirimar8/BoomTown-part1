@@ -7,8 +7,7 @@ import Profile from './Profile';
 class ProfileContainer extends Component {
 
   render() {
-    // console.log(this.props);
-    // console.log(this.props.match.params.userid);
+
     return <Profile Id={this.props.match.params.userid} />;
   }
 }

@@ -15,7 +15,22 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 // import { FormSpy } from 'react-final-form'
 
+const handleChange = event => {
+  this.setState({
+    selectedTags: event.target.value
+  })
+};
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 // const onValidate = values => { console.log(values) };
 // const onFormSubmit = values => { console.log(values) };
@@ -24,7 +39,8 @@ class ShareForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      tags: []
     };
   }
 
@@ -33,7 +49,8 @@ class ShareForm extends Component {
     return (
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
-          <Form
+
+          < Form
             onSubmit={resetPreview}
             validate={updatePreview}
             render={({ handleSubmit, form }) => (
@@ -108,25 +125,28 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="tags"
-                    render={({ input }) => (
+                    render={({ input, tags }) => (
+
                       <div>
                         <InputLabel>Add some tags</InputLabel>
                         <Select
                           fullWidth
                           multiple
-                          value={input.value}
-                          // onChange={handleChange}
+                          value={this.state.selectedTags}
+                          onChange={handleChange}
                           input={<Input />}
                           renderValue={selected => selected.join(', ')}
-                        // MenuProps={MenuProps}
+                          MenuProps={MenuProps}
 
                         >
-                          {/* {tags.map(tags => (
-                            <MenuItem key={tag} value={state.item.tags}>
-                              <Checkbox checked={input.tag.indexOf(tag) > -1} />
-                              <ListItemText primary={tag} />
-                            </MenuItem>
-                          ))} */}
+                          {tags &&
+                            tags.map(tag => (
+                              <MenuItem key={tag} value={tag}>
+                                <Checkbox checked={this.state.selectedTags.indexOf(tag) > -1} />
+                                <ListItemText primary={tag.title} />
+                              </MenuItem>
+                            ))
+                          }
                         </Select>
                       </div>
                     )}
@@ -147,7 +167,8 @@ class ShareForm extends Component {
 
           >
           </Form >
-        )}
+        )
+        }
       </ItemPreviewContext.Consumer >
     );
   }
