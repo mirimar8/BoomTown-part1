@@ -38,7 +38,7 @@ const NavBar = ({ classes }) => {
                 <Toolbar className={classes.navContainer}>
                     <Link to={'/items'}>
                         < IconButton edge="start" className={classes.logoIcon} color="inherit" aria-label="menu">
-                            <img className={classes.logo} src={logo} />
+                            <img alt="boomtown logo" className={classes.logo} src={logo} />
                         </IconButton>
                     </Link>
                     <div className={classes.subContainer}>

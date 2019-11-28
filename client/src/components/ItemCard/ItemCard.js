@@ -12,7 +12,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
 const ItemCard = ({ classes, state }) => {
-    console.log(state.item.title);
+    console.log('test', state);
     return (
         < Card className={classes.card}>
             <CardActionArea>
@@ -27,7 +27,8 @@ const ItemCard = ({ classes, state }) => {
                             R
                         </Avatar>
                     }
-                    // title="{state.item.itemowner}"
+                    title='Miri'
+                    // "{state.item.itemowner}"
                     subheader="date"
                 // {state.item.created}
                 />

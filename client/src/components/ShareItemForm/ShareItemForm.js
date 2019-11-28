@@ -9,13 +9,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-// import Checkbox from '@material-ui/core/Checkbox';
-import { FormSpy } from 'react-final-form'
+import Checkbox from '@material-ui/core/Checkbox';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
+// import { FormSpy } from 'react-final-form'
 
 
 
 // const onValidate = values => { console.log(values) };
-const onFormSubmit = values => { console.log(values) };
+// const onFormSubmit = values => { console.log(values) };
 
 class ShareForm extends Component {
   constructor(props) {
@@ -31,8 +34,8 @@ class ShareForm extends Component {
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
           <Form
-            onSubmit={onFormSubmit}
-            // validate={onValidate}
+            onSubmit={resetPreview}
+            validate={updatePreview}
             render={({ handleSubmit, form }) => (
               <form
                 onSubmit={handleSubmit}
@@ -51,6 +54,7 @@ class ShareForm extends Component {
                           color="primary"
                           fullWidth
                           value={input.value}
+
                         >
                           SELECT AN IMAGE
                           </Button>
@@ -61,7 +65,7 @@ class ShareForm extends Component {
 
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
-                    name="itemname"
+                    name="title"
                     render={({ input, meta }) => (
                       <div>
                         <TextField
@@ -104,7 +108,7 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="tags"
-                    render={({ input, meta }) => (
+                    render={({ input }) => (
                       <div>
                         <InputLabel>Add some tags</InputLabel>
                         <Select
@@ -117,10 +121,10 @@ class ShareForm extends Component {
                         // MenuProps={MenuProps}
 
                         >
-                          {/* {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              <Checkbox checked={personName.indexOf(name) > -1} />
-                              <ListItemText primary={name} />
+                          {/* {tags.map(tags => (
+                            <MenuItem key={tag} value={state.item.tags}>
+                              <Checkbox checked={input.tag.indexOf(tag) > -1} />
+                              <ListItemText primary={tag} />
                             </MenuItem>
                           ))} */}
                         </Select>
@@ -132,17 +136,19 @@ class ShareForm extends Component {
                 <Button className={classes.shareButton}
                   type="submit"
                   variant="outlined"
+                  onClick={() => form.reset()}
 
                 >SHARE
                 </Button>
 
               </form>
-            )}
+            )
+            }
 
           >
-          </Form>
+          </Form >
         )}
-      </ItemPreviewContext.Consumer>
+      </ItemPreviewContext.Consumer >
     );
   }
 }
