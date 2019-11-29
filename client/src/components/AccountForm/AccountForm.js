@@ -15,12 +15,8 @@ import {
   VIEWER_QUERY
 } from '../../apollo/queries';
 import { graphql, compose } from 'react-apollo';
+// import validate from './helpers/validation'
 
-/**
- * @TODO: Uncomment the following lines when authentication is added to the form
-
-* import validate from './helpers/validation'
-*/
 
 const refetchQueries = [
   {

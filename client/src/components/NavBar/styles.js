@@ -5,7 +5,7 @@ const styles = theme => ({
     navContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     subContainer: {
         display: 'flex',

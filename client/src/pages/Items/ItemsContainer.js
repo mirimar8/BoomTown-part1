@@ -6,15 +6,15 @@ import Items from './Items';
 
 class ItemsContainer extends Component {
   render() {
-    return (<Items />
-      // (<Query query={ALL_ITEMS_QUERY}>
-      //   {({ loading, error, data }) => {
-      //     if (loading) return <FullScreenLoader inverted />;
-      //     if (error) return <p>{`Error! ${error.message}`}</p>;
-      //     return <Items classes={this.props.classes} items={data.items} />;
+    // console.log(data);
+    return (
+      <Items />
+      // <Query query={ALL_ITEMS_QUERY}>
+      //   {({ data }) => {
+      //     return (<Items classes={this.props.classes} items={data.items} />);
       //   }}
-      // </Query>);
-    )
+      // </Query>
+    );
   }
 }
 

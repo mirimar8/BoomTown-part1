@@ -15,7 +15,7 @@ class ShareContainer extends Component {
           return (
             <Share
               classes={this.props.classes}
-              tags={data} />
+              tags={data.tags} />
           )
 
         }}

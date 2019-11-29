@@ -40,12 +40,12 @@ class ShareForm extends Component {
     super(props);
     this.state = {
       value: '',
-      tags: []
+      selectedTags: []
     };
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, tags } = this.props;
     return (
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
@@ -125,7 +125,7 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="tags"
-                    render={({ input, tags }) => (
+                    render={({ input }) => (
 
                       <div>
                         <InputLabel>Add some tags</InputLabel>
@@ -139,14 +139,13 @@ class ShareForm extends Component {
                           MenuProps={MenuProps}
 
                         >
-                          {tags &&
-                            tags.map(tag => (
-                              <MenuItem key={tag} value={tag}>
-                                <Checkbox checked={this.state.selectedTags.indexOf(tag) > -1} />
-                                <ListItemText primary={tag.title} />
-                              </MenuItem>
-                            ))
-                          }
+                          {tags && tags.map(tag => (
+                            <MenuItem key={tag.title} value={tag.title}>
+                              <Checkbox checked={this.state.selectedTags.indexOf(tag) > -1} />
+                              <ListItemText primary={tag.title} />
+                            </MenuItem>
+                          ))}
+
                         </Select>
                       </div>
                     )}

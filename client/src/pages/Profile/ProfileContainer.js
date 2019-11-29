@@ -8,7 +8,7 @@ class ProfileContainer extends Component {
 
   render() {
 
-    return <Profile Id={this.props.match.params.userid} />;
+    return <Profile />;
   }
 }
 

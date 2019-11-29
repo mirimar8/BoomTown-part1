@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import ItemsGrid from '../../components/ItemsGrid';
 
-const Items = ({ classes }) => {
+const Items = ({ classes, items }) => {
   return (
-    <div>
-      <ItemsGrid />
+    <div className={classes.itemsPage}>
+      <ItemsGrid items={items} />
     </div>
   );
 };
