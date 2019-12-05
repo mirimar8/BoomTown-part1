@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
-const ItemCard = ({ classes, state }) => {
+const ItemCard = ({ classes, state, title, description }) => {
     // console.log('test', state);
 
     return (
@@ -40,14 +40,23 @@ const ItemCard = ({ classes, state }) => {
                     variant="h5"
                     component="h2"
                 >
-                    {state.item.title}
+                    {title || state.item.title}
                 </Typography>
+
+                <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="p"
+                >
+                    {[state.item.tags.title]}
+                </Typography>
+
                 <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
                 >
-                    {state.item.description}
+                    {description || state.item.description}
                 </Typography>
 
             </CardContent>

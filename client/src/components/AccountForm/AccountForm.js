@@ -42,7 +42,7 @@ class AccountForm extends Component {
     return (
       <Form
         onSubmit={(values) => {
-
+          // console.log(values);
           const mutationInput = {
             variables: {
               user: values

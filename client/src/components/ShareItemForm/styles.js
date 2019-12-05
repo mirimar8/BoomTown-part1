@@ -4,6 +4,10 @@ const styles = theme => ({
         marginBottom: theme.spacing(2),
         width: '100%'
     },
+    imageInput: {
+        backgroundColor: 'orange',
+        borderRadius: '7px',
+    },
     formButton: {
         marginTop: theme.spacing(2),
     },
@@ -27,13 +31,13 @@ const styles = theme => ({
     shareButton: {
         width: '30%',
         height: '7%',
-        marginTop: '20px'
+        marginTop: '10px'
     },
     errorMessage: {
         color: 'firebrick'
     },
     heading: {
-        paddingBottom: theme.spacing(5),
+        paddingBottom: theme.spacing(1),
         paddingLeft: theme.spacing(0),
         marginTop: 0
     }

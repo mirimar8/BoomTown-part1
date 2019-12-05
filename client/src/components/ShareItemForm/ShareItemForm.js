@@ -12,14 +12,12 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { ADD_ITEM_MUTATION } from '../../apollo/queries';
+import { graphql, compose } from 'react-apollo';
 
 // import { FormSpy } from 'react-final-form'
 
-const handleChange = event => {
-  this.setState({
-    selectedTags: event.target.value
-  })
-};
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,8 +30,6 @@ const MenuProps = {
   },
 };
 
-// const onValidate = values => { console.log(values) };
-// const onFormSubmit = values => { console.log(values) };
 
 class ShareForm extends Component {
   constructor(props) {
@@ -44,16 +40,44 @@ class ShareForm extends Component {
     };
   }
 
+
   render() {
     const { classes, tags } = this.props;
+    const addItemMutation = this.props.addItemMutation;
+
+    const handleChange = event => {
+      console.log("hi");
+      this.setState({
+        selectedTags: event.target.value
+
+      })
+      console.log(this.state);
+    };
+
     return (
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
 
-          < Form
-            onSubmit={resetPreview}
+          <Form
+            onSubmit={resetPreview, (values) => {
+              const selectedTags = this.state.selectedTags;
+              const mutationInput = {
+                variables: {
+                  item: {
+                    title: values.title,
+                    description: values.description,
+                    tags: [{ id: 1, title: "tags.title" }]
+                  }
+                }
+              }
+
+              console.log("addingitem", mutationInput);
+              console.log(values, selectedTags);
+              addItemMutation(mutationInput);
+
+            }}
             validate={updatePreview}
-            render={({ handleSubmit, form }) => (
+            render={({ handleSubmit, form, invalid, pristine, values }) => (
               <form
                 onSubmit={handleSubmit}
                 className={classes.shareForm}
@@ -63,9 +87,24 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="imageurl"
-                    render={({ input, meta }) => (
+                    render={({ input }) => (
                       <div>
-                        <Button
+
+                        <TextField
+                          className={classes.imageInput}
+                          type="text"
+                          margin="normal"
+                          label="SELECT AN IMAGE"//  use formSpy
+                          fullWidth
+                          variant="outlined"
+                          inputProps={{
+                            autoComplete: 'off',
+                            ...input
+                          }}
+                          value={state.item.imageurl}
+                        />
+
+                        {/* <Button
                           variant="contained"
                           margin="normal"
                           color="primary"
@@ -74,7 +113,7 @@ class ShareForm extends Component {
 
                         >
                           SELECT AN IMAGE
-                          </Button>
+                          </Button> */}
                       </div>
                     )}
                   />
@@ -88,7 +127,7 @@ class ShareForm extends Component {
                         <TextField
                           type="text"
                           margin="normal"
-                          label={state.item.title} //  use formSpy
+                          label={state.item.title}
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -109,7 +148,7 @@ class ShareForm extends Component {
                         <TextField
                           type="text"
                           margin="normal"
-                          label={state.item.description} // use formSpy
+                          label={state.item.description}
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -140,8 +179,9 @@ class ShareForm extends Component {
 
                         >
                           {tags && tags.map(tag => (
-                            <MenuItem key={tag.title} value={tag.title}>
-                              <Checkbox checked={this.state.selectedTags.indexOf(tag) > -1} />
+                            <MenuItem key={tag.id} value={tag.title}>
+
+                              <Checkbox />
                               <ListItemText primary={tag.title} />
                             </MenuItem>
                           ))}
@@ -155,7 +195,9 @@ class ShareForm extends Component {
                 <Button className={classes.shareButton}
                   type="submit"
                   variant="outlined"
-                  onClick={() => form.reset()}
+                  disabled={pristine || invalid}
+
+                // onClick={() => form.reset()}
 
                 >SHARE
                 </Button>
@@ -173,4 +215,12 @@ class ShareForm extends Component {
   }
 }
 
-export default withStyles(styles)(ShareForm);
+
+export default compose(
+  graphql(ADD_ITEM_MUTATION, {
+
+    name: 'addItemMutation'
+  }),
+  withStyles(styles),
+)(ShareForm);
+

@@ -10,7 +10,7 @@ class ShareItemPreview extends Component {
             <ItemPreviewContext.Consumer>
                 {({ state }) =>
                     <div>
-                        <ItemCard state={state} />
+                        <ItemCard state={state} title={this.props.title} description={this.props.description} />
                     </div>
                 }
             </ItemPreviewContext.Consumer>

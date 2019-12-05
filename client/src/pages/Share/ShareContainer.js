@@ -17,9 +17,7 @@ class ShareContainer extends Component {
               classes={this.props.classes}
               tags={data.tags} />
           )
-
         }}
-
       </Query>
 
 

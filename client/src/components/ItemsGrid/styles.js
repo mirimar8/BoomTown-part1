@@ -1,3 +1,4 @@
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -6,6 +7,10 @@ const styles = theme => ({
         paddingTop: '30px',
         paddingBottom: '30px',
         height: '100%'
+    },
+    gridBox: {
+        display: 'grid',
+        flexDirection: 'row',
     }
 });
 export default styles;
