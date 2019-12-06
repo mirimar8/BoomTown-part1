@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
-const ProfileCard = ({ state, classes }) => {
+const ProfileCard = ({ classes }) => {
 
     return (
         <Card className={classes.card}>
@@ -14,6 +14,7 @@ const ProfileCard = ({ state, classes }) => {
                 <div className={classes.userName}>
                     <Avatar className={classes.avatar}>M</Avatar>
                     <Typography className={classes.fullname}>
+
                         Miri Markovitz
                     </Typography>
                 </div>

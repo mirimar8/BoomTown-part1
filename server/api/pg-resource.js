@@ -100,11 +100,11 @@ module.exports = postgres => {
           try {
             // Begin postgres transaction
             client.query("BEGIN", async err => {
-              const { title, description, tags } = item;
+              const { title, description, tags, imageurl } = item;
 
               const newItemQuery = {
-                text: `INSERT INTO items (title, description, "ownerId") VALUES ($1, $2, $3) RETURNING *`,
-                values: [title, description, user.id]
+                text: `INSERT INTO items (title, description, "ownerId", imageurl) VALUES ($1, $2, $3, $4) RETURNING *`,
+                values: [title, description, user.id, imageurl]
               };
               const newItem = await client.query(newItemQuery);
               const newItemId = newItem.rows[0].id;

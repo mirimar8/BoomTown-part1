@@ -9,8 +9,11 @@ const styles = theme => ({
         height: '100%'
     },
     gridBox: {
-        display: 'grid',
-        flexDirection: 'row',
+        display: 'flex',
+    },
+    grid: {
+        flexBasis: '33%',
+        marginTop: '20px',
     }
 });
 export default styles;

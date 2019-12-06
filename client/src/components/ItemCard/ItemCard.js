@@ -11,15 +11,16 @@ import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
-const ItemCard = ({ classes, state, title, description }) => {
-    // console.log('test', state);
+const ItemCard = ({ classes, item }) => {
+    console.log('test-card-item', item)
+
 
     return (
         < Card className={classes.card}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image={state.item.imageurl}
+                    image={item.imageurl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS77QpvM9kV624QsyMdfRW3G83cIxz8hbVXOsBJLZQQWjHAxqC4'}
                 >
                 </CardMedia>
                 <CardHeader
@@ -28,7 +29,7 @@ const ItemCard = ({ classes, state, title, description }) => {
                             R
                         </Avatar>
                     }
-                    title={state.item.itemowner.fullname}
+                    title={item.itemowner.fullname}
                     // "{state.item.itemowner}"
                     subheader="date"
                 // {state.item.created}
@@ -40,7 +41,7 @@ const ItemCard = ({ classes, state, title, description }) => {
                     variant="h5"
                     component="h2"
                 >
-                    {title || state.item.title}
+                    {item.title}
                 </Typography>
 
                 <Typography
@@ -48,7 +49,9 @@ const ItemCard = ({ classes, state, title, description }) => {
                     variant="h5"
                     component="p"
                 >
-                    {[state.item.tags.title]}
+                    {item.tags.map((tag) => {
+                        return tag.title;
+                    }).join(',')}
                 </Typography>
 
                 <Typography
@@ -56,7 +59,7 @@ const ItemCard = ({ classes, state, title, description }) => {
                     color="textSecondary"
                     component="p"
                 >
-                    {description || state.item.description}
+                    {item.description}
                 </Typography>
 
             </CardContent>

@@ -12,8 +12,11 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { ADD_ITEM_MUTATION } from '../../apollo/queries';
+import { ADD_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../../apollo/queries';
 import { graphql, compose } from 'react-apollo';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
+
 
 // import { FormSpy } from 'react-final-form'
 
@@ -40,40 +43,67 @@ class ShareForm extends Component {
     };
   }
 
+  createTags = (selectedTags) => {
+    const { tags } = this.props;
+    let out = [];
+
+    tags.map(tag => {
+      if (selectedTags.indexOf(tag.title) !== -1) {
+        let { id, title } = tag;
+        out.push({ id, title });
+      }
+    })
+
+    return out;
+  }
+
+  // resetForm = () => {
+  //   this.setState({
+  //     value: '',
+  //     selectedTags: []
+  //   });
+  // };
+
 
   render() {
     const { classes, tags } = this.props;
+    console.log("tags", tags);
+
     const addItemMutation = this.props.addItemMutation;
 
-    const handleChange = event => {
-      console.log("hi");
-      this.setState({
-        selectedTags: event.target.value
+    console.log('selectedtags', this.state.selectedTags)
 
-      })
-      console.log(this.state);
-    };
+    if (this.state.redirect) {
+      return <Redirect to='/items' />
+    }
 
     return (
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
 
           <Form
+
             onSubmit={resetPreview, (values) => {
-              const selectedTags = this.state.selectedTags;
+              // const selectedTags = this.state.selectedTags;
+              this.createTags(this.state.selectedTags);
               const mutationInput = {
                 variables: {
                   item: {
                     title: values.title,
                     description: values.description,
-                    tags: [{ id: 1, title: "tags.title" }]
+                    tags: this.createTags(this.state.selectedTags),
+                    imageurl: values.imageurl
                   }
                 }
               }
-
+              console.log('values', values)
               console.log("addingitem", mutationInput);
-              console.log(values, selectedTags);
-              addItemMutation(mutationInput);
+              addItemMutation(mutationInput).then(() => {
+                resetPreview();
+                this.setState({
+                  redirect: true
+                })
+              });
 
             }}
             validate={updatePreview}
@@ -94,7 +124,7 @@ class ShareForm extends Component {
                           className={classes.imageInput}
                           type="text"
                           margin="normal"
-                          label="SELECT AN IMAGE"//  use formSpy
+                          label="SELECT AN IMAGE"
                           fullWidth
                           variant="outlined"
                           inputProps={{
@@ -103,17 +133,6 @@ class ShareForm extends Component {
                           }}
                           value={state.item.imageurl}
                         />
-
-                        {/* <Button
-                          variant="contained"
-                          margin="normal"
-                          color="primary"
-                          fullWidth
-                          value={input.value}
-
-                        >
-                          SELECT AN IMAGE
-                          </Button> */}
                       </div>
                     )}
                   />
@@ -122,12 +141,12 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="title"
-                    render={({ input, meta }) => (
+                    render={({ input }) => (
                       <div>
                         <TextField
                           type="text"
                           margin="normal"
-                          label={state.item.title}
+                          label="Name your item"
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -143,12 +162,12 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="description"
-                    render={({ input, meta }) => (
+                    render={({ input }) => (
                       <div>
                         <TextField
                           type="text"
                           margin="normal"
-                          label={state.item.description}
+                          label="Describe your item"
                           fullWidth
                           inputProps={{
                             autoComplete: 'off',
@@ -165,14 +184,18 @@ class ShareForm extends Component {
                   <Field
                     name="tags"
                     render={({ input }) => (
-
-                      <div>
+                      < div >
                         <InputLabel>Add some tags</InputLabel>
                         <Select
                           fullWidth
                           multiple
                           value={this.state.selectedTags}
-                          onChange={handleChange}
+                          onChange={(event) => {
+                            this.setState({
+                              selectedTags: event.target.value
+                            })
+                            updatePreview({ tags: this.createTags(event.target.value) })
+                          }}
                           input={<Input />}
                           renderValue={selected => selected.join(', ')}
                           MenuProps={MenuProps}
@@ -180,7 +203,6 @@ class ShareForm extends Component {
                         >
                           {tags && tags.map(tag => (
                             <MenuItem key={tag.id} value={tag.title}>
-
                               <Checkbox />
                               <ListItemText primary={tag.title} />
                             </MenuItem>
@@ -196,12 +218,12 @@ class ShareForm extends Component {
                   type="submit"
                   variant="outlined"
                   disabled={pristine || invalid}
+                  onSubmit={handleSubmit}
 
-                // onClick={() => form.reset()}
+                // onClick={() => this.resetForm()}
 
                 >SHARE
                 </Button>
-
               </form>
             )
             }
@@ -215,10 +237,18 @@ class ShareForm extends Component {
   }
 }
 
+const refetchQueries = [
+  {
+    query: ALL_ITEMS_QUERY,
+  },
+];
+
 
 export default compose(
   graphql(ADD_ITEM_MUTATION, {
-
+    options: {
+      refetchQueries,
+    },
     name: 'addItemMutation'
   }),
   withStyles(styles),

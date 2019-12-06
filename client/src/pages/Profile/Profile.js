@@ -2,12 +2,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import ItemsGrid from '../../components/ItemsGrid';
+import ItemCard from '../../components/ItemCard';
 import ProfileCard from '../../components/ProfileCard';
 import Typography from '@material-ui/core/Typography';
 
 
 
-const Profile = ({ classes }) => {
+const Profile = ({ state, classes }) => {
   return (
     <div className={classes.profilePage}>
 
