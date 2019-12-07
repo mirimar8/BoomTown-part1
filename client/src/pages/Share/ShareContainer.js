@@ -19,8 +19,6 @@ class ShareContainer extends Component {
           )
         }}
       </Query>
-
-
     )
 
   }

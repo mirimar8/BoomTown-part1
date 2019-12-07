@@ -6,8 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
-const ProfileCard = ({ classes }) => {
-
+const ProfileCard = ({ data, classes }) => {
+    console.log('data', data)
     return (
         <Card className={classes.card}>
             <CardContent className={classes.cardContainer}>
@@ -15,7 +15,7 @@ const ProfileCard = ({ classes }) => {
                     <Avatar className={classes.avatar}>M</Avatar>
                     <Typography className={classes.fullname}>
 
-                        Miri Markovitz
+                        {data.user.fullname}
                     </Typography>
                 </div>
 
@@ -23,14 +23,15 @@ const ProfileCard = ({ classes }) => {
                     className={classes.userInfo}
                     variant="h5"
                     component="h2">
-                    0 Items shared 0 Items borrowed
+                    {data.user.items.length} Items shared 0 Items borrowed.
+
                 </Typography>
 
                 <Typography
                     className={classes.userBio}
                     variant="body2"
                     component="h3">
-                    "No bio provided."
+                    {!data.user.bio ? '"No bio provided."' : data.user.bio}
                 </Typography>
             </CardContent>
 

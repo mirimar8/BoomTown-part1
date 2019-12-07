@@ -12,7 +12,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
 const ItemCard = ({ classes, item }) => {
-    console.log('test-card-item', item)
+    // console.log('test-card-item', item)
 
 
     return (

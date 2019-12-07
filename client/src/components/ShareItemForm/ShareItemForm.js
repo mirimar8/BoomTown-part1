@@ -67,11 +67,11 @@ class ShareForm extends Component {
 
   render() {
     const { classes, tags } = this.props;
-    console.log("tags", tags);
+    // console.log("tags", tags);
 
     const addItemMutation = this.props.addItemMutation;
 
-    console.log('selectedtags', this.state.selectedTags)
+    // console.log('selectedtags', this.state.selectedTags)
 
     if (this.state.redirect) {
       return <Redirect to='/items' />
@@ -96,8 +96,8 @@ class ShareForm extends Component {
                   }
                 }
               }
-              console.log('values', values)
-              console.log("addingitem", mutationInput);
+              // console.log('values', values)
+              // console.log("addingitem", mutationInput);
               addItemMutation(mutationInput).then(() => {
                 resetPreview();
                 this.setState({

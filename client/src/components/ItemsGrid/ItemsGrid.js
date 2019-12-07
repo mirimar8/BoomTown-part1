@@ -2,10 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Grid from '@material-ui/core/Grid';
-import ShareItemPreview from '../../components/ShareItemPreview';
 import ItemCard from '../ItemCard';
 
-const ItemsGrid = ({ classes, items }) => {
+const ItemsGrid = ({ classes, items, data }) => {
     if (!items) return <p>no items</p>
     return (
         <div className={classes.root}>

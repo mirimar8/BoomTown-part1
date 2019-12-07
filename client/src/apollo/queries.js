@@ -58,12 +58,12 @@ export const ALL_USER_ITEMS_QUERY = gql`
         ...ItemFields
       }
       borrowed {
-        ...itemFields
+        ...ItemFields
       }
     }
   }
   ${ItemFields}
-`;
+  `;
 
 export const ALL_TAGS_QUERY = gql`
   query {
