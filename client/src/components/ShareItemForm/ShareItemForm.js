@@ -14,13 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { ADD_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../../apollo/queries';
 import { graphql, compose } from 'react-apollo';
-import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
-
-
-// import { FormSpy } from 'react-final-form'
-
-
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -53,25 +47,12 @@ class ShareForm extends Component {
         out.push({ id, title });
       }
     })
-
     return out;
   }
 
-  // resetForm = () => {
-  //   this.setState({
-  //     value: '',
-  //     selectedTags: []
-  //   });
-  // };
-
-
   render() {
     const { classes, tags } = this.props;
-    // console.log("tags", tags);
-
     const addItemMutation = this.props.addItemMutation;
-
-    // console.log('selectedtags', this.state.selectedTags)
 
     if (this.state.redirect) {
       return <Redirect to='/items' />
@@ -80,11 +61,8 @@ class ShareForm extends Component {
     return (
       <ItemPreviewContext.Consumer>
         {({ state, updatePreview, resetPreview }) => (
-
           <Form
-
             onSubmit={resetPreview, (values) => {
-              // const selectedTags = this.state.selectedTags;
               this.createTags(this.state.selectedTags);
               const mutationInput = {
                 variables: {
@@ -96,15 +74,12 @@ class ShareForm extends Component {
                   }
                 }
               }
-              // console.log('values', values)
-              // console.log("addingitem", mutationInput);
               addItemMutation(mutationInput).then(() => {
                 resetPreview();
                 this.setState({
                   redirect: true
                 })
               });
-
             }}
             validate={updatePreview}
             render={({ handleSubmit, form, invalid, pristine, values }) => (
@@ -219,15 +194,11 @@ class ShareForm extends Component {
                   variant="outlined"
                   disabled={pristine || invalid}
                   onSubmit={handleSubmit}
-
-                // onClick={() => this.resetForm()}
-
                 >SHARE
                 </Button>
               </form>
             )
             }
-
           >
           </Form >
         )
@@ -242,7 +213,6 @@ const refetchQueries = [
     query: ALL_ITEMS_QUERY,
   },
 ];
-
 
 export default compose(
   graphql(ADD_ITEM_MUTATION, {

@@ -4,8 +4,8 @@ import styles from './styles';
 import Grid from '@material-ui/core/Grid';
 import ItemCard from '../ItemCard';
 
-const ItemsGrid = ({ classes, items, data }) => {
-    if (!items) return <p>no items</p>
+const ItemsGrid = ({ classes, items }) => {
+    if (!items) return <p>No items</p>
     return (
         <div className={classes.root}>
             <Grid container className={classes.gridBox}>

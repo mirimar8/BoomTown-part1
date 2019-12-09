@@ -12,9 +12,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
 const ItemCard = ({ classes, item }) => {
-    // console.log('test-card-item', item)
-
-
     return (
         < Card className={classes.card}>
             <CardActionArea>
@@ -26,13 +23,11 @@ const ItemCard = ({ classes, item }) => {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="user" className={classes.avatar}>
-                            R
+                            M
                         </Avatar>
                     }
                     title={item.itemowner.fullname}
-                    // "{state.item.itemowner}"
                     subheader="date"
-                // {state.item.created}
                 />
             </CardActionArea>
             <CardContent className={classes.content}>
@@ -46,8 +41,9 @@ const ItemCard = ({ classes, item }) => {
 
                 <Typography
                     gutterBottom
-                    variant="h5"
+                    variant="body2"
                     component="p"
+                    color="textSecondary"
                 >
                     {item.tags.map((tag) => {
                         return tag.title;
@@ -55,8 +51,7 @@ const ItemCard = ({ classes, item }) => {
                 </Typography>
 
                 <Typography
-                    variant="body2"
-                    color="textSecondary"
+                    variant="body1"
                     component="p"
                 >
                     {item.description}

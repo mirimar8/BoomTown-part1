@@ -6,10 +6,8 @@ import ProfileCard from '../../components/ProfileCard';
 import Typography from '@material-ui/core/Typography';
 
 const Profile = ({ classes, data }) => {
-  console.log('data', data)
   return (
     <div className={classes.profilePage}>
-
       <ProfileCard data={data} />
       <Typography className={classes.title}>
         Shared Items
@@ -17,7 +15,6 @@ const Profile = ({ classes, data }) => {
       <div className={classes.userItems}>
         <ItemsGrid items={data.user.items} />
       </div>
-
     </div >
   );
 };

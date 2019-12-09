@@ -14,8 +14,6 @@ export const ViewerProvider = ({ children }) => {
             {children}
           </ViewerContext.Provider>
         );
-
-
       }}
     </Query>
   );

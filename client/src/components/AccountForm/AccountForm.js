@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-// import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +16,8 @@ import {
 import { graphql, compose } from 'react-apollo';
 // import validate from './helpers/validation'
 
+// const onValidate = values => {
+// };
 
 const refetchQueries = [
   {
@@ -24,16 +25,11 @@ const refetchQueries = [
   },
 ];
 
-const onValidate = values => {
-  // console.log(values)
-
-};
-
 class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true //when its true its logging in when false its logged out
+      formToggle: true //when its true its logging in when false its logging out
     };
   }
 
@@ -42,7 +38,6 @@ class AccountForm extends Component {
     return (
       <Form
         onSubmit={(values) => {
-          // console.log(values);
           const mutationInput = {
             variables: {
               user: values
@@ -50,8 +45,8 @@ class AccountForm extends Component {
           }
           this.state.formToggle ? login(mutationInput) : signup(mutationInput)
         }}
-        validate={onValidate}
-        render={({ handleSubmit, form, invalid, pristine, values }) => (
+        // validate={onValidate}
+        render={({ handleSubmit, form, invalid, pristine }) => (
           <form
             onSubmit={handleSubmit}
             className={classes.accountForm}
@@ -61,7 +56,7 @@ class AccountForm extends Component {
                 <InputLabel htmlFor="fullname"></InputLabel>
                 <Field
                   name="fullname"
-                  render={({ input, meta }) => (
+                  render={({ input }) => (
                     <div>
                       <TextField
                         id="fullname"
@@ -85,7 +80,7 @@ class AccountForm extends Component {
               <InputLabel htmlFor="email"></InputLabel>
               <Field
                 name="email"
-                render={({ input, meta }) => (
+                render={({ input }) => (
                   <div>
                     <TextField
                       id="email"
@@ -172,9 +167,7 @@ class AccountForm extends Component {
           </form>
         )}
       ></Form >
-
     );
-
   }
 }
 

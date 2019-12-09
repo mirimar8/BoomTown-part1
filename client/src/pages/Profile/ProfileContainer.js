@@ -19,10 +19,7 @@ export default class ProfileContainer extends Component {
                 id: this.props.match.params.userid || viewer.id
               }}
             >
-              {({ loading, error, data }) => {
-                console.log('error is', error);
-                console.log('data', data)
-                // console.log('viewer', viewer)
+              {({ loading, data }) => {
 
                 if (loading || !data) return <p>loading</p>
                 return (
@@ -30,7 +27,6 @@ export default class ProfileContainer extends Component {
                     classes={this.props.classes}
                     data={data} />
                 )
-                return <div>whatever</div>
               }}
             </Query>
           )

@@ -6,12 +6,9 @@ import { ALL_TAGS_QUERY } from '../../apollo/queries';
 
 class ShareContainer extends Component {
   render() {
-
     return (
       <Query query={ALL_TAGS_QUERY}>
-
         {({ data }) => {
-          // console.log('tags', data)
           return (
             <Share
               classes={this.props.classes}
@@ -20,7 +17,6 @@ class ShareContainer extends Component {
         }}
       </Query>
     )
-
   }
 }
 
