@@ -1,8 +1,8 @@
 # Boomtown 🏙
 
 ## Description
-Create the front-end UI of a web-based application to support a local sharing economy. 
-Functionally, the app will allow users to browse all items and user profiles, and also share items of their own and request to borrow items from other users.
+A web-based application to support a local sharing economy. 
+The app allows users to browse all items and user profiles, and also share items of their own.
 
 ## Screenshots
 ![](client/src/images/BT1.png)
