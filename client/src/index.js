@@ -10,7 +10,6 @@ import registerServiceWorker from './registerServiceWorker';
 import theme from './theme';
 import client from './apollo';
 import AppRoutes from './routes';
-
 import './index.css';
 
 const App = () => {

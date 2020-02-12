@@ -15,7 +15,6 @@ import { LOGOUT_MUTATION } from '../../apollo/queries';
 import { Mutation } from 'react-apollo';
 import client from '../../apollo';
 
-
 const NavBar = ({ classes }) => {
     const [auth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -30,10 +29,8 @@ const NavBar = ({ classes }) => {
 
     };
 
-
     return (
         <div className={classes.root}>
-
             <AppBar position="static">
                 <Toolbar className={classes.navContainer}>
                     <Link to={'/items'}>
@@ -80,8 +77,6 @@ const NavBar = ({ classes }) => {
                                         <MenuItem onClick={handleClose}>Your Profile</MenuItem>
                                     </Link>
 
-
-
                                     <Mutation
                                         mutation={LOGOUT_MUTATION}
                                         onCompleted={() => client.resetStore()}>
@@ -90,9 +85,7 @@ const NavBar = ({ classes }) => {
                                                 Sign Out
                                             </MenuItem>
                                         }
-
                                     </Mutation>
-
                                 </Menu>
                             </div>
                         )}

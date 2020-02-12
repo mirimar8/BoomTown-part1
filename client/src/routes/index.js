@@ -7,7 +7,6 @@ import Share from '../pages/Share';
 import Profile from '../pages/Profile';
 import { ViewerContext } from '../context/ViewerProvider';
 
-
 export default () => (
   <ViewerContext.Consumer>
     {({ viewer, loading }) => {

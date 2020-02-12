@@ -44,11 +44,13 @@ class ShareForm extends Component {
     tags.map(tag => {
       if (selectedTags.indexOf(tag.title) !== -1) {
         let { id, title } = tag;
-        out.push({ id, title });
+        out.push({ id, title })
       }
+      return out;
     })
     return out;
   }
+
 
   render() {
     const { classes, tags } = this.props;

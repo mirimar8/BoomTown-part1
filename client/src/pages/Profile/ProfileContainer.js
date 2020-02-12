@@ -5,9 +5,7 @@ import { Query } from 'react-apollo';
 import { ALL_USER_ITEMS_QUERY } from '../../apollo/queries';
 import { ViewerContext } from "../../context/ViewerProvider";
 
-
-export default class ProfileContainer extends Component {
-
+class ProfileContainer extends Component {
   render() {
     return (
       <ViewerContext.Consumer>
@@ -18,6 +16,7 @@ export default class ProfileContainer extends Component {
               variables={{
                 id: this.props.match.params.userid || viewer.id
               }}
+              fetchPolicy="network-only"
             >
               {({ loading, data }) => {
 
@@ -35,6 +34,8 @@ export default class ProfileContainer extends Component {
       </ViewerContext.Consumer>
     )
   }
-
-
 }
+
+export default ProfileContainer;
+
+

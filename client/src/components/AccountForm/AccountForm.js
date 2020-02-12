@@ -29,7 +29,7 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true //when its true its logging in when false its logging out
+      formToggle: true
     };
   }
 

@@ -20,3 +20,4 @@ const Profile = ({ classes, data }) => {
 };
 
 export default withStyles(styles)(Profile);
+

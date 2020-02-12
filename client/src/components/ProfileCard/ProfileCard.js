@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 
 const ProfileCard = ({ data, classes }) => {
-    console.log('data', data)
     return (
         <Card className={classes.card}>
             <CardContent className={classes.cardContainer}>

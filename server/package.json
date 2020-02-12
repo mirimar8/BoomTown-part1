@@ -1,5 +1,6 @@
 {
   "name": "boomtown-server",
+  "author": "Miri Markovitz <mirimarkovitzbl@gmail.com> ",
   "version": "1.0.0",
   "description": "Server-side code for RED Academy's Boomtown project.",
   "main": "main.js",
@@ -11,7 +12,6 @@
     "start:dev": "NODE_ENV=development nodemon main.js "
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.6.2",
