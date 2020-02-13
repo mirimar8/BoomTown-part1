@@ -2,7 +2,8 @@
 const styles = theme => ({
     formControl: {
         marginBottom: theme.spacing(2),
-        width: '100%'
+        width: '100%',
+
     },
     imageInput: {
         backgroundColor: 'orange',
@@ -40,6 +41,10 @@ const styles = theme => ({
         paddingBottom: theme.spacing(1),
         paddingLeft: theme.spacing(0),
         marginTop: 0
+    },
+    required: {
+        color: 'red',
+        fontSize: 15
     }
 });
 

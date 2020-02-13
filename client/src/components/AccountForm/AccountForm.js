@@ -14,10 +14,7 @@ import {
   VIEWER_QUERY
 } from '../../apollo/queries';
 import { graphql, compose } from 'react-apollo';
-// import validate from './helpers/validation'
-
-// const onValidate = values => {
-// };
+import validate from './helpers/validation'
 
 const refetchQueries = [
   {
@@ -29,7 +26,9 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true
+      formToggle: true,
+      error: null,
+
     };
   }
 
@@ -45,7 +44,7 @@ class AccountForm extends Component {
           }
           this.state.formToggle ? login(mutationInput) : signup(mutationInput)
         }}
-        // validate={onValidate}
+        validate={validate}
         render={({ handleSubmit, form, invalid, pristine }) => (
           <form
             onSubmit={handleSubmit}
@@ -56,7 +55,7 @@ class AccountForm extends Component {
                 <InputLabel htmlFor="fullname"></InputLabel>
                 <Field
                   name="fullname"
-                  render={({ input }) => (
+                  render={({ input, meta }) => (
                     <div>
                       <TextField
                         id="fullname"
@@ -70,6 +69,8 @@ class AccountForm extends Component {
                         }}
                         value={input.value}
                       />
+                      {meta.error && meta.touched && <span>{meta.error}</span>}
+
                     </div>
                   )}
                 />
@@ -80,7 +81,7 @@ class AccountForm extends Component {
               <InputLabel htmlFor="email"></InputLabel>
               <Field
                 name="email"
-                render={({ input }) => (
+                render={({ input, meta }) => (
                   <div>
                     <TextField
                       id="email"
@@ -95,6 +96,7 @@ class AccountForm extends Component {
                       value={input.value}
                       className={classes.textField}
                     />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
                   </div>
                 )}
               />
@@ -118,6 +120,7 @@ class AccountForm extends Component {
                       }}
                       value={input.value}
                     />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
                   </div>
                 )}
               />
@@ -149,7 +152,8 @@ class AccountForm extends Component {
                     onClick={() => {
                       form.reset();
                       this.setState({
-                        formToggle: !this.state.formToggle
+                        formToggle: !this.state.formToggle,
+                        error: null,
                       });
                     }}
                   >
@@ -162,7 +166,7 @@ class AccountForm extends Component {
             </FormControl>
 
             <Typography className={classes.errorMessage}>
-              {/* @TODO: Display sign-up and login errors */}
+              {this.state.error && this.state.formToggle}
             </Typography>
           </form>
         )}

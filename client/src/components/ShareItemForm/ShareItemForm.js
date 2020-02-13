@@ -15,6 +15,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { ADD_ITEM_MUTATION, ALL_ITEMS_QUERY } from '../../apollo/queries';
 import { graphql, compose } from 'react-apollo';
 import { Redirect } from 'react-router';
+import validate from './helpers/validation';
+
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,12 +31,13 @@ const MenuProps = {
 };
 
 
+
 class ShareForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: '',
-      selectedTags: []
+      selectedTags: [],
     };
   }
 
@@ -55,6 +59,9 @@ class ShareForm extends Component {
   render() {
     const { classes, tags } = this.props;
     const addItemMutation = this.props.addItemMutation;
+    // const required = value => <div className={classes.required}>{value ? undefined : 'Required'}</div>
+    // const requiredTags = selectedTags => selectedTags ? undefined : 'Required'
+
 
     if (this.state.redirect) {
       return <Redirect to='/items' />
@@ -83,8 +90,9 @@ class ShareForm extends Component {
                 })
               });
             }}
+            // validate={validate}
             validate={updatePreview}
-            render={({ handleSubmit, form, invalid, pristine, values }) => (
+            render={({ handleSubmit, form, invalid, pristine, values, submitting }) => (
               <form
                 onSubmit={handleSubmit}
                 className={classes.shareForm}
@@ -94,9 +102,10 @@ class ShareForm extends Component {
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="imageurl"
-                    render={({ input }) => (
+                  // validate={required}
+                  >
+                    {({ input, meta }) => (
                       <div>
-
                         <TextField
                           className={classes.imageInput}
                           type="text"
@@ -110,15 +119,18 @@ class ShareForm extends Component {
                           }}
                           value={state.item.imageurl}
                         />
+                        {meta.error && meta.touched && <span>{meta.error}</span>}
                       </div>
                     )}
-                  />
+                  </Field>
                 </FormControl>
 
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="title"
-                    render={({ input }) => (
+                  // validate={required}
+                  >
+                    {({ input, meta }) => (
                       <div>
                         <TextField
                           type="text"
@@ -131,15 +143,19 @@ class ShareForm extends Component {
                           }}
                           value={input.value}
                         />
+                        {meta.error && meta.touched && <span>{meta.error}</span>}
+
                       </div>
                     )}
-                  />
+                  </Field>
                 </FormControl>
 
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="description"
-                    render={({ input }) => (
+                  // validate={required}
+                  >
+                    {({ input, meta }) => (
                       <div>
                         <TextField
                           type="text"
@@ -152,15 +168,19 @@ class ShareForm extends Component {
                           }}
                           value={input.value}
                         />
+                        {meta.error && meta.touched && <span>{meta.error}</span>}
+
                       </div>
                     )}
-                  />
+                  </Field>
                 </FormControl>
 
                 <FormControl fullWidth className={classes.formControl}>
                   <Field
                     name="tags"
-                    render={({ input }) => (
+                  // validate={requiredTags}
+                  >
+                    {({ input, meta }) => (
                       < div >
                         <InputLabel>Add some tags</InputLabel>
                         <Select
@@ -184,18 +204,19 @@ class ShareForm extends Component {
                               <ListItemText primary={tag.title} />
                             </MenuItem>
                           ))}
+                          {meta.error && meta.touched && <span>{meta.error}</span>}
 
                         </Select>
+
                       </div>
                     )}
-                  />
+                  </Field>
                 </FormControl>
 
                 <Button className={classes.shareButton}
                   type="submit"
                   variant="outlined"
-                  disabled={pristine || invalid}
-                  onSubmit={handleSubmit}
+                  disabled={pristine || invalid || submitting}
                 >SHARE
                 </Button>
               </form>
